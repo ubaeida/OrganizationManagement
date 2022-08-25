@@ -1,7 +1,9 @@
 from appSettings import app, api, Resource, request
 from services.outreachService import OutreachService
+from mapper.outreachBoMapper import OutreachBoMapper
 
 outreachService = OutreachService()
+outreachBoMapper = OutreachBoMapper()
 
 
 class OutreachController(Resource):
@@ -11,15 +13,19 @@ class OutreachController(Resource):
 
     def post(self):
         if request.is_json:
-            return outreachService.add()
+            outreach = outreachBoMapper.to_bo(request)
+            return outreachService.add(outreach)
         else:
             return {'error': 'request must be jason'}, 400
 
 
-class AdvancedOutreachController(Resource):
+class OutreachesController(Resource):
 
     def put(self, id):
-        return outreachService.put(id)
+        updated_outreach = request.json
+        for v in request.json.keys():
+            print(v)
+        return outreachService.put(id, updated_outreach)
 
     def delete(self, id):
         return outreachService.delete(id)
@@ -28,12 +34,12 @@ class AdvancedOutreachController(Resource):
         return outreachService.get_by_id(id)
 
 
-class NameSearchOutreachController(Resource):
+class SearchInOutreachController(Resource):
 
     def get(self, fullname):
         return outreachService.get_by_name(fullname)
 
 
 api.add_resource(OutreachController, "/outreach")
-api.add_resource(AdvancedOutreachController, "/outreach/<id>")
-api.add_resource(NameSearchOutreachController, "/outreach/search/<fullname>")
+api.add_resource(OutreachesController, "/outreach/<id>")
+api.add_resource(SearchInOutreachController, "/outreach/search/<fullname>")

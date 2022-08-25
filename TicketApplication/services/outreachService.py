@@ -1,5 +1,9 @@
+from appSettings import db, Resource, make_response, jsonify, request
+from mapper.outreachBoMapper import OutreachBoMapper
 from models.outreach import Outreach
-from appSettings import db, Resource, request, make_response, jsonify
+
+
+outreachBoMapper = OutreachBoMapper()
 
 
 class OutreachService(Resource):
@@ -8,20 +12,17 @@ class OutreachService(Resource):
         outreach_DB = Outreach.query.all()
         outreach_list = []
         for raw in outreach_DB:
-            raw_data = {"Id": raw.id, "Full_Name": raw.fullname, "Gender": raw.gender,
-                        "family_number": raw.family_number}
-            outreach_list.append(raw_data)
+            out = outreachBoMapper.to_request(raw)
+            outreach_list.append(out)
         return {"Outreach": outreach_list}, 200
 
-    def add(self):
-        new_outreach = Outreach(fullname=request.json["fullname"], gender=request.json["gender"],
-                                family_number=request.json["family_number"])
+    def add(self, new_outreach):
         db.session.add(new_outreach)
         db.session.commit()
         return f'added new raw for {new_outreach.fullname}', 200
 
-    def put(self, id):
-        raw_to_update = Outreach.query.get(id)
+    def put(self, id, updated_outreach): # Here need to be mapped
+        raw_to_update = outreachBoMapper.to_request(Outreach.query.get(id))
         if raw_to_update is None:
             return {'error': 'not found'}, 400
         else:
@@ -32,7 +33,6 @@ class OutreachService(Resource):
             return f'updated', 200
 
     def delete(self, id):
-
         raw_to_delete = Outreach.query.get(id)
         if raw_to_delete is None:
             return {'error': 'not found'}, 400
