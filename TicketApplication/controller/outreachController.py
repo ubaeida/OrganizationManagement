@@ -1,6 +1,6 @@
-from appSettings import app, api, Resource, request
-from services.outreachService import OutreachService
+from appSettings import api, Resource, request
 from mapper.outreachBoMapper import OutreachBoMapper
+from services.outreachService import OutreachService
 
 outreachService = OutreachService()
 outreachBoMapper = OutreachBoMapper()
@@ -16,7 +16,7 @@ class OutreachController(Resource):
             outreach = outreachBoMapper.to_bo(request)
             return outreachService.add(outreach)
         else:
-            return {'error': 'request must be jason'}, 400
+            return {'error': 'request must be jason'}
 
 
 class OutreachesController(Resource):

@@ -1,8 +1,8 @@
-from appSettings import Resource, request
+from appSettings import request
 from models.outreach import Outreach
 
 
-class OutreachBoMapper(Resource):
+class OutreachBoMapper:
 
     def to_bo(self, data):
         return Outreach(fullname=request.json["fullname"], gender=request.json["gender"],
