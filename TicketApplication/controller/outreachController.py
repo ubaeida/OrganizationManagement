@@ -14,7 +14,7 @@ class OutreachController(Resource):
     def post(self):
         if request.is_json:
             outreach = outreachBoMapper.to_bo(request)
-            return outreachService.add(outreach)
+            return outreachBoMapper.to_request(outreachService.add(outreach))
         else:
             return {'error': 'request must be jason'}
 
@@ -22,10 +22,8 @@ class OutreachController(Resource):
 class OutreachesController(Resource):
 
     def put(self, id):
-        updated_outreach = request.json
-        for v in request.json.keys():
-            print(v)
-        return outreachService.put(id, updated_outreach)
+        updated_outreach = outreachBoMapper.to_bo(request.json)
+        return outreachBoMapper.to_request(outreachService.put(id, updated_outreach))
 
     def delete(self, id):
         return outreachService.delete(id)

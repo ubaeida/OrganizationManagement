@@ -9,6 +9,6 @@ class OutreachBoMapper:
                         family_number=request.json["family_number"])
 
     def to_request(self, bo):
-        out = {"Id": bo.id, "fullname": bo.fullname, "gender": bo.gender,
+        out = {"fullname": bo.fullname, "gender": bo.gender,
                "family_number": bo.family_number}
         return out

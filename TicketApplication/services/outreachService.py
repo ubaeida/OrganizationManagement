@@ -1,11 +1,13 @@
-from appSettings import db, request
+import copy
+
+from appSettings import db
 from mapper.outreachBoMapper import OutreachBoMapper
 from models.outreach import Outreach
 
 outreachBoMapper = OutreachBoMapper()
 
 
-class OutreachService:
+class OutreachService():
 
     def get(self):
         outreach_DB = Outreach.query.all()
@@ -18,18 +20,20 @@ class OutreachService:
     def add(self, new_outreach):
         db.session.add(new_outreach)
         db.session.commit()
-        return f'added new raw for {new_outreach.fullname}'
+        return new_outreach
 
-    def put(self, id, updated_outreach):  # Here need to be mapped
-        raw_to_update = outreachBoMapper.to_request(Outreach.query.get(id))
+    def put(self, id, updated_outreach):
+        raw_to_update = Outreach.query.get(id)
         if raw_to_update is None:
             return {'error': 'not found'}
         else:
-            raw_to_update.fullname = request.json['fullname']
-            raw_to_update.gender = request.json['gender']
-            raw_to_update.family_number = request.json['family_number']
+            raw_to_update = updated_outreach
+            raw_to_update.id = id
+            # raw_to_update.fullname = updated_outreach.fullname
+            # raw_to_update.gender = updated_outreach.gender
+            # raw_to_update.family_number = updated_outreach.family_number
             db.session.commit()
-            return f'updated'
+        return raw_to_update
 
     def delete(self, id):
         raw_to_delete = Outreach.query.get(id)
