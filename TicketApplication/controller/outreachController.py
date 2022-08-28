@@ -1,15 +1,21 @@
 from appSettings import api, Resource, request
 from mapper.outreachBoMapper import OutreachBoMapper
 from services.outreachService import OutreachService
+from flask_restful import reqparse
 
 outreachService = OutreachService()
 outreachBoMapper = OutreachBoMapper()
 
-
-class OutreachController(Resource):
+# make the links and classes better
+class OutreachesController(Resource):
 
     def get(self):
-        return outreachService.get()
+        outreach_key_set = set(outreachBoMapper.g_to_bo(request.args).__dict__.keys())
+        input_key_set = set(request.args.keys())
+        if not input_key_set.issubset(outreach_key_set):
+            return 'invalid search criteria'
+
+        return outreachService.search(request.args)
 
     def post(self):
         if request.is_json:
@@ -19,7 +25,7 @@ class OutreachController(Resource):
             return {'error': 'request must be jason'}
 
 
-class OutreachesController(Resource):
+class OutreachController(Resource):
 
     def put(self, id):
         updated_outreach = outreachBoMapper.to_bo(request.json)
@@ -32,12 +38,5 @@ class OutreachesController(Resource):
         return outreachService.get_by_id(id)
 
 
-class SearchInOutreachController(Resource):
-
-    def get(self, fullname):
-        return outreachService.get_by_name(fullname)
-
-
-api.add_resource(OutreachController, "/outreach")
-api.add_resource(OutreachesController, "/outreach/<id>")
-api.add_resource(SearchInOutreachController, "/outreach/search/<fullname>")
+api.add_resource(OutreachesController, "/outreach")
+api.add_resource(OutreachController, "/outreach/<id>")
