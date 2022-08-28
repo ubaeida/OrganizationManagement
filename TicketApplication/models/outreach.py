@@ -14,5 +14,5 @@ class Outreach(db.Model):
         self.gender = gender
         self.family_number = family_number
 
-    # def __repr__(self):
-    #     return f'Gender : {self.gender} , fullname: {self.fullname} , id: {self.id}, family_number: {self.family_number}'
+    def __repr__(self):
+        return f'Gender : {self.gender} , fullname: {self.fullname} , id: {self.id}, family_number: {self.family_number}'

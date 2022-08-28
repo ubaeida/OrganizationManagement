@@ -1,4 +1,4 @@
-import copy
+import json
 
 from appSettings import db
 from mapper.outreachBoMapper import OutreachBoMapper
@@ -7,14 +7,17 @@ from models.outreach import Outreach
 outreachBoMapper = OutreachBoMapper()
 
 
-class OutreachService():
+class OutreachService:
 
-    def get(self):
-        outreach_DB = Outreach.query.all()
+    def search(self, outreach):
         outreach_list = []
-        for raw in outreach_DB:
-            out = outreachBoMapper.to_request(raw)
-            outreach_list.append(out)
+        searched_raws = []
+        for key, value in outreach.items():
+            searched_raws = Outreach.query.filter(getattr(Outreach, key).like(value)).all()
+        for raw in searched_raws:
+            outreach_list.append(
+                outreachBoMapper.to_request(raw)
+            )
         return {"Outreach": outreach_list}
 
     def add(self, new_outreach):
@@ -27,11 +30,8 @@ class OutreachService():
         if raw_to_update is None:
             return {'error': 'not found'}
         else:
-            raw_to_update = updated_outreach
-            raw_to_update.id = id
-            # raw_to_update.fullname = updated_outreach.fullname
-            # raw_to_update.gender = updated_outreach.gender
-            # raw_to_update.family_number = updated_outreach.family_number
+            updated_outreach.id = id
+            db.session.merge(updated_outreach)
             db.session.commit()
         return raw_to_update
 
@@ -51,14 +51,3 @@ class OutreachService():
         else:
             out = outreachBoMapper.to_request(searched_raw)
             return out
-
-    def get_by_name(self, fullname):
-        searched_raw = Outreach.query.filter(Outreach.fullname.startswith(fullname)).all()
-        if not searched_raw:
-            return {'error': 'not found'}
-        else:
-            outreach_list = []
-            for raw in searched_raw:
-                out = outreachBoMapper.to_request(raw)
-                outreach_list.append(out)
-            return {"Outreach": outreach_list}

@@ -6,10 +6,13 @@ outreachService = OutreachService()
 outreachBoMapper = OutreachBoMapper()
 
 
-class OutreachController(Resource):
+# make the links and classes better
+class OutreachesController(Resource):
 
     def get(self):
-        return outreachService.get()
+        if request.is_json:
+            outreach = request.json
+            return outreachService.search(outreach)
 
     def post(self):
         if request.is_json:
@@ -19,7 +22,7 @@ class OutreachController(Resource):
             return {'error': 'request must be jason'}
 
 
-class OutreachesController(Resource):
+class OutreachController(Resource):
 
     def put(self, id):
         updated_outreach = outreachBoMapper.to_bo(request.json)
@@ -32,12 +35,5 @@ class OutreachesController(Resource):
         return outreachService.get_by_id(id)
 
 
-class SearchInOutreachController(Resource):
-
-    def get(self, fullname):
-        return outreachService.get_by_name(fullname)
-
-
-api.add_resource(OutreachController, "/outreach")
-api.add_resource(OutreachesController, "/outreach/<id>")
-api.add_resource(SearchInOutreachController, "/outreach/search/<fullname>")
+api.add_resource(OutreachesController, "/outreach")
+api.add_resource(OutreachController, "/outreach/<id>")
