@@ -10,7 +10,9 @@ class Outreach(db.Model):
 
     search = {
         'id': lambda value: Outreach.id == value,
-        'fullname': lambda value: Outreach.fullname.like(f'%{value}%')
+        'fullname': lambda value: Outreach.fullname.like(f'%{value}%'),
+        'gender': lambda value: Outreach.gender == value,
+        'family_number': lambda value: Outreach.family_number == value,
     }
 
     def __init__(self, fullname, gender: Gender, family_number, id=None):

@@ -6,19 +6,6 @@ outreachBoMapper = OutreachBoMapper()
 
 
 class OutreachService:
-
-    def search(self, outreach):
-        outreach_list = []
-        query = Outreach.query
-        for key, value in outreach.items():
-            query = query.filter(Outreach.search[key](value))
-        print(query)
-        for raw in query.all():
-            outreach_list.append(
-                outreachBoMapper.to_request(raw)
-            )
-        return {"Outreach": outreach_list}
-
     def add(self, new_outreach):
         db.session.add(new_outreach)
         db.session.commit()
@@ -50,3 +37,14 @@ class OutreachService:
         else:
             out = outreachBoMapper.to_request(searched_raw)
             return out
+
+    def search(self, outreach):
+        outreach_list = []
+        query = Outreach.query
+        for key, value in outreach.items():
+            query = query.filter(Outreach.search[key](value))
+        for raw in query.all():
+            outreach_list.append(
+                outreachBoMapper.to_request(raw)
+            )
+        return {"Outreach": outreach_list}
