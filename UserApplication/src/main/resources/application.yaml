@@ -4,3 +4,14 @@ spring:
     url: jdbc:mysql://localhost:3306/organizationmanagement
     username: root
     password: 1234
+  application:
+    name: user-application-server
+
+
+
+server:
+  port: 8060
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
