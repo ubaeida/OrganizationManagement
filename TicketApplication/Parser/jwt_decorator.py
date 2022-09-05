@@ -5,9 +5,11 @@ from Auditor.authoritiesAuditor import AuthoritiesAuditor
 from appSettings import request, app
 
 authoritiesAuditor = AuthoritiesAuditor()
+
+
 class JwtAspect:
     @staticmethod
-    def token_required(f):
+    def jwt_secured(f):
         @wraps(f)
         def validate_jwt(*args, **kwargs):
             token = None
@@ -22,8 +24,6 @@ class JwtAspect:
             try:
                 data = jwt.decode(token, app.config["JWT_SECRET_KEY"], algorithms=["HS256"])
                 kwargs['jwt_decoded'] = data
-                user_type = kwargs['jwt_decoded']['type']
-                authoritiesAuditor.links_access_auditor(user_type)
             except Exception as e:
                 return {
                            "message": "Something went wrong",

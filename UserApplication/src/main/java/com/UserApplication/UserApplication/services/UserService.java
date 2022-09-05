@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -42,8 +43,15 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    public Optional<User> searchUser(Long id) {
-        return userRepository.findById(id);
+//    Return if null need to be better
+    public User searchUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return user;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -63,7 +71,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var userDetails= userRepository.findByUsername(username).orElseThrow();
+        var userDetails = userRepository.findByUsername(username).orElseThrow();
         userDetails.getAuthorities();
         return userDetails;
     }

@@ -1,7 +1,6 @@
-from flask import Flask, request, jsonify, make_response
-from flask_restful import Resource, Api
+from flask import Flask, request
+from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
-from functools import wraps
 
 app = Flask(__name__)
 api = Api(app)

@@ -21,7 +21,7 @@ import static com.UserApplication.UserApplication.models.Permissions.Authorities
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final String[] PUBLIC_ENDPOINTS = {"/auth/login"};
+    private final String[] PUBLIC_ENDPOINTS = {"/auth/login", "/auth/hasAuthority"};
 
     private final UserService userService;
 

@@ -11,7 +11,7 @@ public interface IUserService {
 
     List<User> getUsers();
 
-    Optional<User> searchUser(Long id);
+    User searchUser(Long id);
 
     void deleteUser(Long id);
 

@@ -22,7 +22,7 @@ public class TokenUtil {
     String jwtSignSecret;
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = Map.of(CLAIMS_SUBJECT, ((User) userDetails).getId(),CLAIMS_type,((User) userDetails).getType(), CLAIMS_CREATED, new Date());
+        Map<String, Object> claims = Map.of(CLAIMS_SUBJECT, ((User) userDetails).getName(),CLAIMS_type,((User) userDetails).getType(), CLAIMS_CREATED, new Date());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -32,7 +32,7 @@ public class TokenUtil {
 
     public boolean validate(String jwt) {
         try {
-            Jwts.parser().setSigningKey(jwtSignSecret).parseClaimsJws(jwt).getBody().getSubject();
+            Jwts.parser().setSigningKey(jwtSignSecret.getBytes()).parseClaimsJws(jwt).getBody().getSubject();
             return true;
         } catch (JwtException jwtException) {
             throw jwtException;
@@ -40,7 +40,7 @@ public class TokenUtil {
     }
 
     public String extractUsername(String jwt) {
-        var headerClaimsJwt = Jwts.parser().setSigningKey(jwtSignSecret).parseClaimsJws(jwt);
+        var headerClaimsJwt = Jwts.parser().setSigningKey(jwtSignSecret.getBytes()).parseClaimsJws(jwt);
         return headerClaimsJwt.getBody().getSubject();
     }
 }

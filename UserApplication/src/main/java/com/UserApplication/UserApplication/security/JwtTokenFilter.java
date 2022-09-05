@@ -26,6 +26,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     Permissions permissions;
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);

@@ -1,4 +1,5 @@
 from Parser.jwt_decorator import JwtAspect
+from Auditor.authoritiesAuditor import AuthoritiesAuditor
 from appSettings import Resource, request, api
 from mapper.candidateMapper import CandidateMapper
 from services.candidateService import CandidateService
@@ -8,31 +9,30 @@ candidateService = CandidateService()
 
 
 class CandidateController(Resource):
-    @JwtAspect.token_required
+    @JwtAspect.jwt_secured
     def put(self, id):
         if request.is_json:
             updated_candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.put(id, updated_candidate))
 
-    @JwtAspect.token_required
+    @JwtAspect.jwt_secured
     def delete(self, id):
         return candidateService.delete(id)
 
-    @JwtAspect.token_required
-    # @Allowed_Permission('VIEW_ASSESMENT')
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permission='VIEW_ASSESSMENT')
     def get(self, id, **kwargs):
-        print('from get', kwargs['jwt_decoded'])
         return candidateService.get_by_id(id)
 
 
 class CandidatesController(Resource):
-    @JwtAspect.token_required
+    @JwtAspect.jwt_secured
     def post(self):
         if request.is_json:
             candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.add(candidate))
 
-    @JwtAspect.token_required
+    @JwtAspect.jwt_secured
     def get(self):
         candidate_key_set = set(candidateMapper.g_to_bo(request.args).__dict__.keys())
         input_key_sey = set(request.args.keys())
