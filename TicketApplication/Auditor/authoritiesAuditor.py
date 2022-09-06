@@ -13,12 +13,10 @@ class AuthoritiesAuditor:
                 user_type = kwargs['jwt_decoded']['type']
                 response = eureka_client.do_service('user-application-server',
                                                     f'/auth/hasAuthority?receivedUserType={user_type}&questionedPermission={permission}')
-                print(response)
                 if response == 'true':
-                    print('User allowed')
+                    return f(*args, **kwargs)
                 else:
-                    print('user not allowed')
-                return f(*args, **kwargs)
+                    return {'message': 'user not allowed for this process'}
 
             return checker
 

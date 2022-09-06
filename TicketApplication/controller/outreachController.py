@@ -1,3 +1,5 @@
+from Auditor.authoritiesAuditor import AuthoritiesAuditor
+from Parser.jwt_decorator import JwtAspect
 from appSettings import api, Resource, request
 from mapper.outreachBoMapper import OutreachBoMapper
 from services.outreachService import OutreachService
@@ -7,7 +9,8 @@ outreachBoMapper = OutreachBoMapper()
 
 
 class OutreachController(Resource):
-
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permission='EDIT_ASSESSMENT')
     def put(self, id):
         if request.is_json:
             updated_outreach = outreachBoMapper.g_to_bo(request.json)
@@ -15,22 +18,29 @@ class OutreachController(Resource):
         else:
             return {'error': 'request must be jason'}
 
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permission='DELETE_ASSESSMENT')
     def delete(self, id):
         return outreachService.delete(id)
 
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permission='VIEW_ASSESSMENT')
     def get(self, id):
         return outreachService.get_by_id(id)
 
 
 class OutreachesController(Resource):
-
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permission='VIEW_ASSESSMENT')
     def get(self):
         outreach_key_set = set(outreachBoMapper.g_to_bo(request.args).__dict__.keys())
         input_key_set = set(request.args.keys())
         if not input_key_set.issubset(outreach_key_set):
-            return 'invalid search criteria'
+            return {'error': 'invalid search criteria'}
         return outreachService.search(request.args)
 
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permission='CREATE_ASSESSMENT')
     def post(self):
         if request.is_json:
             outreach = outreachBoMapper.g_to_bo(request)
