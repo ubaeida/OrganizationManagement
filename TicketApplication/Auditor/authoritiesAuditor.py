@@ -1,6 +1,7 @@
+import urllib.request
 from functools import wraps
 
-import requests
+import py_eureka_client.eureka_client as eureka_client
 
 
 class AuthoritiesAuditor:
@@ -10,9 +11,10 @@ class AuthoritiesAuditor:
             @wraps(f)
             def checker(*args, **kwargs):
                 user_type = kwargs['jwt_decoded']['type']
-                response = requests.get(
-                    f'http://localhost:8060/auth/hasAuthority?receivedUserType={user_type}&questionedPermission={permission}')
-                if response.content.decode('utf-8') == 'true':
+                response = eureka_client.do_service('user-application-server',
+                                                    f'/auth/hasAuthority?receivedUserType={user_type}&questionedPermission={permission}')
+                print(response)
+                if response == 'true':
                     print('User allowed')
                 else:
                     print('user not allowed')
