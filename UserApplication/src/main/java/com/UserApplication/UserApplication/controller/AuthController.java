@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @GetMapping("/hasAuthority")
-    public boolean hasAuthority(@RequestParam String receivedUserType, @RequestParam SimpleGrantedAuthority questionedPermission) {
+    public boolean hasAuthority(@RequestParam String receivedUserType, @RequestParam String questionedPermission) {
         return authService.hasAuth(receivedUserType, questionedPermission);
     }
 }

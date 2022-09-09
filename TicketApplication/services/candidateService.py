@@ -48,3 +48,16 @@ class CandidateService:
                 candidateMapper.to_request(raw)
             )
         return {"Outreach": candidate_list}
+
+    def update_status(self, id, user_type):
+        raw_to_update = Candidate.query.get(id)
+        if raw_to_update.status == 'nominated':
+            if user_type == 'APPROVE_ASSESSMENT':
+                status = 'approved'
+                raw_to_update.status = status
+            else:
+                status = 'accepted'
+                raw_to_update.status = status
+        else:
+            return {'message': 'the candidate might approved or accepted already'}
+        return {'message': 'the candidate status has been updated'}
