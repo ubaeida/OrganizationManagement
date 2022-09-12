@@ -11,7 +11,7 @@ outreachBoMapper = OutreachBoMapper()
 class OutreachController(Resource):
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='EDIT_ASSESSMENT')
-    def put(self, id):
+    def put(self, id, **kwargs):
         if request.is_json:
             updated_outreach = outreachBoMapper.g_to_bo(request.json)
             return outreachBoMapper.to_request(outreachService.put(id, updated_outreach))
@@ -20,19 +20,19 @@ class OutreachController(Resource):
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='DELETE_ASSESSMENT')
-    def delete(self, id):
+    def delete(self, id, **kwargs):
         return outreachService.delete(id)
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='VIEW_ASSESSMENT')
-    def get(self, id):
+    def get(self, id, **kwargs):
         return outreachService.get_by_id(id)
 
 
 class OutreachesController(Resource):
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='VIEW_ASSESSMENT')
-    def get(self):
+    def get(self, **kwargs):
         outreach_key_set = set(outreachBoMapper.g_to_bo(request.args).__dict__.keys())
         input_key_set = set(request.args.keys())
         if not input_key_set.issubset(outreach_key_set):
@@ -41,7 +41,7 @@ class OutreachesController(Resource):
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='CREATE_ASSESSMENT')
-    def post(self):
+    def post(self, **kwargs):
         if request.is_json:
             outreach = outreachBoMapper.g_to_bo(request)
             return outreachBoMapper.to_request(outreachService.add(outreach))
