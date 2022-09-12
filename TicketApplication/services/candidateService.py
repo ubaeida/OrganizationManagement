@@ -47,7 +47,7 @@ class CandidateService:
             candidate_list.append(
                 candidateMapper.to_request(raw)
             )
-        return {"Outreach": candidate_list}
+        return {"Candidate": candidate_list}
 
     def update_status(self, id, user_type):
         raw_to_update = Candidate.query.get(id)

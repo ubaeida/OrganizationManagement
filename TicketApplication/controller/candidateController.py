@@ -11,10 +11,12 @@ candidateService = CandidateService()
 class CandidateController(Resource):
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='EDIT_ASSESSMENT')
-    def put(self, id):
+    def put(self, id, **kwargs):
         if request.is_json:
             updated_candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.put(id, updated_candidate))
+        else:
+            return {'warning': 'request must be json'}
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='DELETE_ASSESSMENT')
@@ -36,14 +38,16 @@ class CandidateController(Resource):
 class CandidatesController(Resource):
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='CREATE_ASSESSMENT')
-    def post(self):
+    def post(self, **kwargs):
         if request.is_json:
             candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.add(candidate))
+        else:
+            return {'warning': 'request must be json'}
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='VIEW_ASSESSMENT')
-    def get(self):
+    def get(sel, **kwargs):
         candidate_key_set = set(candidateMapper.g_to_bo(request.args).__dict__.keys())
         input_key_sey = set(request.args.keys())
         if not input_key_sey.issubset(candidate_key_set):
