@@ -26,7 +26,6 @@ class Candidate(db.Model):
         'nominator_id': lambda value: Candidate.nominator_id == value,
         'status': lambda value: Candidate.status.like(f'{value}'),
         'updater_id': lambda value: Candidate.updater_id == value,
-
     }
 
     def __init__(self, fullname, gender: Gender, nominator_id, status: CandidateStatus, updater_id, id=None, ):

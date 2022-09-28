@@ -54,3 +54,18 @@ class CaseService:
                 caseMapper.to_request(raw)
             )
         return {"Case": case_list}
+
+    def get_unassigned_cases(self):
+        case_list = []
+        query = Case.query.filter(Case.case_worker_id == None)
+        for raw in query.all():
+            case_list.append(caseMapper.to_request(raw))
+        return {'cases': case_list}
+
+    def assign_case(self, case_id, cw_id, user_type):
+        case = Case.query.get(case_id)
+        if user_type == 'CASE_MANAGEMENT_OFFICER':
+            case.case_worker_id = cw_id
+            db.session.commit()
+            return {'message': 'the case have been assigned'}
+        return {'error': 'case have not been assigned'}

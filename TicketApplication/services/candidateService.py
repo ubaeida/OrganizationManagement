@@ -1,4 +1,5 @@
 from models.candidate import Candidate
+from models.case import Case
 from appSettings import db
 from mapper.candidateMapper import CandidateMapper
 
@@ -31,33 +32,47 @@ class CandidateService:
             db.session.commit()
             return f'{raw_to_delete.fullname} is deleted'
 
-    def get_by_id(self, id):
-        searched_raw = Candidate.query.get(id)
-        if searched_raw is None:
+    def get_by_id(self, id, user_type):
+        current_candidate = Candidate.query.get(id)
+        if current_candidate is None:
             return {'error': 'not found'}
-        else:
-            return candidateMapper.to_request(searched_raw)
+        if user_type == 'CASE_MANAGEMENT_OFFICER' and current_candidate.status == 'approved':
+            return candidateMapper.to_request(current_candidate)
+        if user_type == 'OUTREACH_OFFICER' or user_type == 'HOTLINE_ASSISTANT' or user_type == 'OUTREACH_ASSISTANT':
+            return candidateMapper.to_request(current_candidate)
 
-    def search(self, candidate):
+    def search(self, candidate, user_type):
         candidate_list = []
         query = Candidate.query
-        for key, value in candidate.items():
-            query = query.filter(Candidate.search[key](value))
+        if user_type == 'CASE_MANAGEMENT_OFFICER':
+            query = query.filter(Candidate.status == 'approved')
+        else:
+            for key, value in candidate.items():
+                query = query.filter(Candidate.search[key](value))
         for raw in query.all():
             candidate_list.append(
                 candidateMapper.to_request(raw)
             )
         return {"Candidate": candidate_list}
 
-    def update_status(self, id, user_type):
-        raw_to_update = Candidate.query.get(id)
-        if raw_to_update.status == 'nominated':
-            if user_type == 'APPROVE_ASSESSMENT':
+    def update_status(self, id, user_type, user_id):
+        current_candidate = Candidate.query.get(id)
+        if current_candidate.status == 'nominated' or current_candidate.status == 'approved':
+            if user_type == 'OUTREACH_OFFICER':
                 status = 'approved'
-                raw_to_update.status = status
-            else:
+                current_candidate.status = status
+                current_candidate.updater_id = user_id
+                db.session.commit()
+            elif user_type == 'CASE_MANAGEMENT_OFFICER':
                 status = 'accepted'
-                raw_to_update.status = status
+                current_candidate.status = status
+                current_candidate.updater_id = user_id
+                new_case = Case(fullname=current_candidate.fullname, gender=current_candidate.gender,
+                                case_worker_id=None)
+                db.session.add(new_case)
+                db.session.commit()
+            else:
+                return {'message': 'Not allowed to do this operation'}
         else:
             return {'message': 'the candidate might approved or accepted already'}
         return {'message': 'the candidate status has been updated'}

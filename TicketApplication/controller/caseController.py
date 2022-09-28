@@ -51,5 +51,19 @@ class CasesController(Resource):
         return caseService.search(request.args)
 
 
+class CMOAssignCaseController(Resource):
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permissions='ASSIGN_CASE')
+    def get(self, **kwargs):
+        return caseService.get_unassigned_cases()
+
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permissions='ASSIGN_CASE')
+    def patch(self, case_id, cw_id, **kwargs):
+        user_type = kwargs['jwt_decoded']['type']
+        return caseService.assign_case(case_id, cw_id, user_type)
+
+
 api.add_resource(CasesController, '/cases')
 api.add_resource(CaseController, '/case/<id>')
+api.add_resource(CMOAssignCaseController, '/case/assign', '/case/<case_id>/assign/<cw_id>')
