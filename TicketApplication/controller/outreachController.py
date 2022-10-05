@@ -50,4 +50,4 @@ class OutreachesController(Resource):
 
 
 api.add_resource(OutreachesController, "/outreaches")
-api.add_resource(OutreachController, "/outreach/<id>")
+api.add_resource(OutreachController, "/outreaches/<id>")

@@ -59,4 +59,4 @@ class CandidatesController(Resource):
 
 
 api.add_resource(CandidatesController, '/candidates')
-api.add_resource(CandidateController, '/candidate/<id>')
+api.add_resource(CandidateController, '/candidates/<id>')

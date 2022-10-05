@@ -25,7 +25,15 @@ class Case(db.Model):
         'case_worker_id': lambda value: Case.case_worker_id == value,
     }
 
-    def __init__(self, fullname, gender: Gender, case_worker_id, status: CaseStatus = "waiting_to_approve", id=None):
+    nullable = {
+        'id': lambda: Case.id == None,
+        'fullname': lambda: Case.fullname == None,
+        'gender': lambda: Case.gender == None,
+        'status': lambda: Case.status == None,
+        'case_worker_id': lambda: Case.case_worker_id == None,
+    }
+
+    def __init__(self, fullname, gender: Gender, case_worker_id, status: CaseStatus = 'awaiting_assignment', id=None):
         self.id = id
         self.fullname = fullname
         self.gender = gender

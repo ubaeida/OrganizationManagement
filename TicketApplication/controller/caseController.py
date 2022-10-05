@@ -5,7 +5,7 @@ from services.caseService import CaseService
 from mapper.caseMapper import CaseMapper
 
 caseService = CaseService()
-caseMapper = CaseMapper
+caseMapper = CaseMapper()
 
 
 class CaseController(Resource):
@@ -30,6 +30,11 @@ class CaseController(Resource):
         else:
             return {'warning': 'request must be json'}
 
+    @JwtAspect.jwt_secured
+    @AuthoritiesAuditor.secured(permissions='EDIT_CASE')
+    def patch(self, id, **kwargs):
+        user_type = kwargs['jwt_decoded']['type']
+        return caseService.update_case_status_by_cw(id, user_type)
 
 class CasesController(Resource):
     @JwtAspect.jwt_secured
@@ -43,27 +48,27 @@ class CasesController(Resource):
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='VIEW_CASES')
-    def get(self):
+    def get(self, **kwargs):
+        user_type = kwargs['jwt_decoded']['type']
+        user_id = kwargs['jwt_decoded']['id']
         case_key_set = set(caseMapper.g_to_bo(request.args).__dict__.keys())
-        input_key_sey = set(request.args.keys())
-        if not input_key_sey.issubset(case_key_set):
+        input_key_set = set(request.args.keys())
+        if not input_key_set.issubset(case_key_set):
             return 'invalid search criteria'
-        return caseService.search(request.args)
+        return caseService.search(request.args, user_type, user_id)
 
 
 class CMOAssignCaseController(Resource):
-    @JwtAspect.jwt_secured
-    @AuthoritiesAuditor.secured(permissions='ASSIGN_CASE')
-    def get(self, **kwargs):
-        return caseService.get_unassigned_cases()
 
     @JwtAspect.jwt_secured
-    @AuthoritiesAuditor.secured(permissions='ASSIGN_CASE')
-    def patch(self, case_id, cw_id, **kwargs):
+    @AuthoritiesAuditor.secured(permissions='UPDATE_CASE_STATUS')
+    def patch(self, case_id, action, **kwargs):
         user_type = kwargs['jwt_decoded']['type']
-        return caseService.assign_case(case_id, cw_id, user_type)
+        params = request.args
+        if action is not None:
+            return caseService.update_case_status(case_id, params, action, user_type)
 
 
 api.add_resource(CasesController, '/cases')
-api.add_resource(CaseController, '/case/<id>')
-api.add_resource(CMOAssignCaseController, '/case/assign', '/case/<case_id>/assign/<cw_id>')
+api.add_resource(CaseController, '/cases/<id>')
+api.add_resource(CMOAssignCaseController, '/cases/<case_id>/status/<action>')

@@ -44,28 +44,97 @@ class CaseService:
         db.session.commit()
         return new_case
 
-    def search(self, args):
+    def search(self, case, user_type, user_id):
         case_list = []
         query = Case.query
-        for key, value in Case.items():
-            query = query.filter(Case.search[key](value))
-        for raw in query.all():
-            case_list.append(
-                caseMapper.to_request(raw)
-            )
-        return {"Case": case_list}
-
-    def get_unassigned_cases(self):
-        case_list = []
-        query = Case.query.filter(Case.case_worker_id == None)
-        for raw in query.all():
-            case_list.append(caseMapper.to_request(raw))
-        return {'cases': case_list}
-
-    def assign_case(self, case_id, cw_id, user_type):
-        case = Case.query.get(case_id)
         if user_type == 'CASE_MANAGEMENT_OFFICER':
-            case.case_worker_id = cw_id
+            for key, value in case.items():
+                if value in ('', 'null', 'none'):
+                    query = query.filter(Case.nullable[key]())
+                else:
+                    query = query.filter(Case.search[key](value))
+            for raw in query.all():
+                case_list.append(
+                    caseMapper.to_request(raw)
+                )
+            return {"Case": case_list}
+        if user_type == 'CASEWORKER':
+            for key, value in case.items():
+                query = query.filter(Case.search[key](value), Case.case_worker_id == user_id)
+            for raw in query.all():
+                case_list.append(
+                    caseMapper.to_request(raw)
+                )
+            return {"Case": case_list}
+        else:
+            return {'message': 'Not allowed for this operation'}
+
+    def update_case_status(self, case_id, params, action, user_type):
+        if params is None or action is None:
+            return {'message': 'action or params have not been sent'}
+        case = Case.query.get(case_id)
+        if user_type == 'CASE_MANAGEMENT_OFFICER' and case.status == 'awaiting_assignment' and action == 'assign':
+            for key, value in params.items():
+                case.case_worker_id = value
+            case.status = 'awaiting_assessment'
             db.session.commit()
             return {'message': 'the case have been assigned'}
-        return {'error': 'case have not been assigned'}
+
+        if user_type == 'CASE_MANAGEMENT_OFFICER' and case.status == 'awaiting_approval':
+            if action == 'approve':
+                case.status = 'active'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+            elif action == 'committee':
+                case.status = 'awaiting_committee'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+            else:
+                case.status = 'rejected'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+
+        if user_type == 'HEAD_OFFICE' and case.status == 'awaiting_committee':
+            if action == 'approve':
+                case.status = 'active'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+            else:
+                case.status = 'rejected'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+
+        if user_type == 'CASE_MANAGEMENT_OFFICER' and case.status == 'awaiting_closure':
+            if action == 'approve':
+                case.status = 'closed'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+            elif action == 'committee':
+                case.status = 'awaiting_committee_closure'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+            else:
+                case.status = 'active'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+
+        if user_type == 'HEAD_OFFICE' and case.status == 'awaiting_committee_closure':
+            if action == 'approve':
+                case.status = 'closed'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+            else:
+                case.status = 'active'
+                db.session.commit()
+                return {'message': 'the case status has been updated'}
+
+    def update_case_status_by_cw(self, case_id, uset_type):
+        case = Case.query.get(case_id)
+        if uset_type == 'CASEWORKER' and case.status == 'awaiting_assessment':
+            case.status = 'awaiting_approval'
+            db.session.commit()
+            return {'message': 'the case status has been updated'}
+        if uset_type == 'CASEWORKER' and case.status == 'active':
+            case.status = 'awaiting_closure'
+            db.session.commit()
+            return {'message': 'the case status has been updated'}
