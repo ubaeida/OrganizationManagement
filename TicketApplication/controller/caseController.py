@@ -34,6 +34,7 @@ class CaseController(Resource):
     @AuthoritiesAuditor.secured(permissions='EDIT_CASE')
     def patch(self, id, **kwargs):
         user_type = kwargs['jwt_decoded']['type']
+
         return caseService.update_case_status_by_cw(id, user_type)
 
 class CasesController(Resource):
@@ -64,9 +65,9 @@ class CMOAssignCaseController(Resource):
     @AuthoritiesAuditor.secured(permissions='UPDATE_CASE_STATUS')
     def patch(self, case_id, action, **kwargs):
         user_type = kwargs['jwt_decoded']['type']
-        params = request.args
+        cw_id = request.json['cw_id']
         if action is not None:
-            return caseService.update_case_status(case_id, params, action, user_type)
+            return caseService.update_case_status(case_id, cw_id, action, user_type)
 
 
 api.add_resource(CasesController, '/cases')

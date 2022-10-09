@@ -33,6 +33,21 @@ class Case(db.Model):
         'case_worker_id': lambda: Case.case_worker_id == None,
     }
 
+    case_transitions = {('CASE_MANAGEMENT_OFFICER', 'awaiting_assignment', 'assign'): 'awaiting_assessment',
+            ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'approve'): 'active',
+            ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'committee'): 'awaiting_committee',
+            ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'reject'): 'rejected',
+            ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'approve'): 'closed',
+            ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'committee'): 'awaiting_committee_closure',
+            ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'reject'): 'active',
+            ('HEAD_OFFICE', 'awaiting_committee', 'approve'): 'active',
+            ('HEAD_OFFICE', 'awaiting_committee', 'reject'): 'rejected',
+            ('HEAD_OFFICE', 'awaiting_committee_closure', 'reject'): 'active',
+            ('HEAD_OFFICE', 'awaiting_committee_closure', 'reject'): 'closed',
+            ('CASEWORKER', 'awaiting_assessment', 'assessed'): 'awaiting_approval',
+            ('CASEWORKER', 'active', 'close'): 'awaiting_closure',
+            }
+
     def __init__(self, fullname, gender: Gender, case_worker_id, status: CaseStatus = 'awaiting_assignment', id=None):
         self.id = id
         self.fullname = fullname

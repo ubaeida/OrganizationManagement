@@ -69,72 +69,17 @@ class CaseService:
         else:
             return {'message': 'Not allowed for this operation'}
 
-    def update_case_status(self, case_id, params, action, user_type):
-        if params is None or action is None:
+    def update_case_status(self, case_id, cw_id, action, user_type):
+        if cw_id is None or action is None:
             return {'message': 'action or params have not been sent'}
         case = Case.query.get(case_id)
-        if user_type == 'CASE_MANAGEMENT_OFFICER' and case.status == 'awaiting_assignment' and action == 'assign':
-            for key, value in params.items():
-                case.case_worker_id = value
-            case.status = 'awaiting_assessment'
-            db.session.commit()
-            return {'message': 'the case have been assigned'}
-
-        if user_type == 'CASE_MANAGEMENT_OFFICER' and case.status == 'awaiting_approval':
-            if action == 'approve':
-                case.status = 'active'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-            elif action == 'committee':
-                case.status = 'awaiting_committee'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-            else:
-                case.status = 'rejected'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-
-        if user_type == 'HEAD_OFFICE' and case.status == 'awaiting_committee':
-            if action == 'approve':
-                case.status = 'active'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-            else:
-                case.status = 'rejected'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-
-        if user_type == 'CASE_MANAGEMENT_OFFICER' and case.status == 'awaiting_closure':
-            if action == 'approve':
-                case.status = 'closed'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-            elif action == 'committee':
-                case.status = 'awaiting_committee_closure'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-            else:
-                case.status = 'active'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-
-        if user_type == 'HEAD_OFFICE' and case.status == 'awaiting_committee_closure':
-            if action == 'approve':
-                case.status = 'closed'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-            else:
-                case.status = 'active'
-                db.session.commit()
-                return {'message': 'the case status has been updated'}
-
-    def update_case_status_by_cw(self, case_id, uset_type):
-        case = Case.query.get(case_id)
-        if uset_type == 'CASEWORKER' and case.status == 'awaiting_assessment':
-            case.status = 'awaiting_approval'
-            db.session.commit()
-            return {'message': 'the case status has been updated'}
-        if uset_type == 'CASEWORKER' and case.status == 'active':
-            case.status = 'awaiting_closure'
-            db.session.commit()
-            return {'message': 'the case status has been updated'}
+        case_status = Case.case_transitions.get((user_type, case.status, action))
+        if case_status is None:
+            return {'error': 'Not allowed'}
+        if (user_type, case.status, action) == ('CASE_MANAGEMENT_OFFICER', 'awaiting_assignment', 'assign'):
+            if cw_id is None:
+                return {'error': 'caseworker id is requested'}
+            case.case_worker_id = cw_id
+        case.status = case_status
+        db.session.commit()
+        return {'message': f'the case status has been updated to {case_status}'}
