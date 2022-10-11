@@ -1,6 +1,7 @@
 from appSettings import db
 from mapper.caseMapper import CaseMapper
 from models.case import Case
+from flask_restful import abort
 
 caseMapper = CaseMapper()
 
@@ -10,29 +11,29 @@ class CaseService:
         if user_type == "CASEWORKER":
             searched_raw = Case.query.filter_by(id=id, case_worker_id=user_id).first()
             if searched_raw is None:
-                return {'error': 'not found'}
+                return abort(400, erorr='Not found')
             else:
                 return caseMapper.to_request(searched_raw)
         elif user_type == "CASE_MANAGEMENT_OFFICER":
             searched_raw = Case.query.get(id)
             if searched_raw is None:
-                return {'error': 'not found'}
+                return abort(400, erorr='Not found')
             else:
                 return caseMapper.to_request(searched_raw)
 
     def delete(self, id):
         raw_to_delete = Case.query.get(id)
         if raw_to_delete is None:
-            return {'error': 'not found'}
+            return abort(400, erorr='Not found')
         else:
             db.session.delete(raw_to_delete)
             db.session.commit()
-            return f'{raw_to_delete.fullname} is deleted'
+            return abort(200, message='Case is deleted')
 
     def put(self, id, updated_case):
         raw_to_update = Case.query.get(id)
         if raw_to_update is None:
-            return {'error': 'not found'}
+            return abort(400, erorr='Not found')
         else:
             updated_case.id = id
             db.session.merge(updated_case)
@@ -67,19 +68,19 @@ class CaseService:
                 )
             return {"Case": case_list}
         else:
-            return {'message': 'Not allowed for this operation'}
+            return abort(400, erorr='Not allowed for this operation')
 
     def update_case_status(self, case_id, cw_id, action, user_type):
         if cw_id is None or action is None:
-            return {'message': 'action or params have not been sent'}
+            return abort(400, erorr='action or params have not been sent')
         case = Case.query.get(case_id)
         case_status = Case.case_transitions.get((user_type, case.status, action))
         if case_status is None:
-            return {'error': 'Not allowed'}
+            return abort(400, erorr=' Not allowed')
         if (user_type, case.status, action) == ('CASE_MANAGEMENT_OFFICER', 'awaiting_assignment', 'assign'):
             if cw_id is None:
-                return {'error': 'caseworker id is requested'}
+                return abort(400, erorr=' caseworker id is requested')
             case.case_worker_id = cw_id
         case.status = case_status
         db.session.commit()
-        return {'message': f'the case status has been updated to {case_status}'}
+        return abort(200, message=f'the case status has been updated to {case_status}')

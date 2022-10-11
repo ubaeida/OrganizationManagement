@@ -3,6 +3,7 @@ from Parser.jwt_decorator import JwtAspect
 from appSettings import api, Resource, request
 from services.caseService import CaseService
 from mapper.caseMapper import CaseMapper
+from flask_restful import abort
 
 caseService = CaseService()
 caseMapper = CaseMapper()
@@ -28,24 +29,18 @@ class CaseController(Resource):
             updated_case = caseMapper.g_to_bo(request.json)
             return caseMapper.to_request(caseService.put(id, updated_case))
         else:
-            return {'warning': 'request must be json'}
+            return abort(400, erorr='Request must be jason')
 
-    @JwtAspect.jwt_secured
-    @AuthoritiesAuditor.secured(permissions='EDIT_CASE')
-    def patch(self, id, **kwargs):
-        user_type = kwargs['jwt_decoded']['type']
-
-        return caseService.update_case_status_by_cw(id, user_type)
 
 class CasesController(Resource):
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='CREATE_CASE')
-    def post(self):
+    def post(self, **kwargs):
         if request.is_json:
             case = caseMapper.g_to_bo(request.json)
             return caseMapper.to_request(caseService.add(case))
         else:
-            return {'warning': 'request must be json'}
+            return abort(400, erorr='Request must be jason')
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='VIEW_CASES')
@@ -55,7 +50,7 @@ class CasesController(Resource):
         case_key_set = set(caseMapper.g_to_bo(request.args).__dict__.keys())
         input_key_set = set(request.args.keys())
         if not input_key_set.issubset(case_key_set):
-            return 'invalid search criteria'
+            return abort(400, message='invalid search criteria')
         return caseService.search(request.args, user_type, user_id)
 
 

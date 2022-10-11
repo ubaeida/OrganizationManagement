@@ -1,7 +1,7 @@
 from models.outreach import Outreach
 
 
-class OutreachBoMapper:
+class OutreachMapper:
 
     def g_to_bo(self, dictionary):
         return Outreach(fullname=dictionary.get("fullname"), gender=dictionary.get("gender"),

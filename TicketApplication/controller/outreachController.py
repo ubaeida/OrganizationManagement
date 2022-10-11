@@ -1,11 +1,12 @@
 from Auditor.authoritiesAuditor import AuthoritiesAuditor
 from Parser.jwt_decorator import JwtAspect
 from appSettings import api, Resource, request
-from mapper.outreachBoMapper import OutreachBoMapper
+from mapper.outreachMapper import OutreachMapper
 from services.outreachService import OutreachService
+from flask_restful import abort
 
 outreachService = OutreachService()
-outreachBoMapper = OutreachBoMapper()
+outreachBoMapper = OutreachMapper()
 
 
 class OutreachController(Resource):
@@ -16,7 +17,7 @@ class OutreachController(Resource):
             updated_outreach = outreachBoMapper.g_to_bo(request.json)
             return outreachBoMapper.to_request(outreachService.put(id, updated_outreach))
         else:
-            return {'error': 'request must be jason'}
+            return abort(400, erorr='Request must be jason')
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='DELETE_ASSESSMENT')
@@ -36,7 +37,7 @@ class OutreachesController(Resource):
         outreach_key_set = set(outreachBoMapper.g_to_bo(request.args).__dict__.keys())
         input_key_set = set(request.args.keys())
         if not input_key_set.issubset(outreach_key_set):
-            return {'error': 'invalid search criteria'}
+            return abort(400, erorr='Invalid search criteria')
         return outreachService.search(request.args)
 
     @JwtAspect.jwt_secured
@@ -46,7 +47,7 @@ class OutreachesController(Resource):
             outreach = outreachBoMapper.g_to_bo(request)
             return outreachBoMapper.to_request(outreachService.add(outreach))
         else:
-            return {'error': 'request must be jason'}
+            return abort(400, erorr='Request must be jason')
 
 
 api.add_resource(OutreachesController, "/outreaches")

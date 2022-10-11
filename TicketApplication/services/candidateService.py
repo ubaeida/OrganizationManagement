@@ -2,6 +2,7 @@ from models.candidate import Candidate
 from models.case import Case
 from appSettings import db
 from mapper.candidateMapper import CandidateMapper
+from flask_restful import abort
 
 candidateMapper = CandidateMapper()
 
@@ -16,7 +17,7 @@ class CandidateService:
     def put(self, id, updated_candidate):
         raw_to_update = Candidate.query.get(id)
         if raw_to_update is None:
-            return {'error': 'not found'}
+            return abort(400, erorr='Candidate not found')
         else:
             updated_candidate.id = id
             db.session.merge(updated_candidate)
@@ -26,16 +27,16 @@ class CandidateService:
     def delete(self, id):
         raw_to_delete = Candidate.query.get(id)
         if raw_to_delete is None:
-            return {'error': 'not found'}
+            return abort(400, erorr='Candidate not found')
         else:
             db.session.delete(raw_to_delete)
             db.session.commit()
-            return f'{raw_to_delete.fullname} is deleted'
+            return abort(200, message='Candidate is deleted')
 
     def get_by_id(self, id, user_type):
         current_candidate = Candidate.query.get(id)
         if current_candidate is None:
-            return {'error': 'not found'}
+            return abort(400, erorr='Candidate not found')
         if user_type == 'CASE_MANAGEMENT_OFFICER' and current_candidate.status == 'approved':
             return candidateMapper.to_request(current_candidate)
         if user_type == 'OUTREACH_OFFICER' or user_type == 'HOTLINE_ASSISTANT' or user_type == 'OUTREACH_ASSISTANT':
@@ -72,7 +73,7 @@ class CandidateService:
                 db.session.add(new_case)
                 db.session.commit()
             else:
-                return {'message': 'Not allowed to do this operation'}
+                return abort(400, erorr='Not allowed to do this operation')
         else:
-            return {'message': 'the candidate might approved or accepted already'}
-        return {'message': 'the candidate status has been updated'}
+            return abort(400, erorr='The candidate might approved or accepted already')
+        return abort(400, erorr='The candidate status has been updated')

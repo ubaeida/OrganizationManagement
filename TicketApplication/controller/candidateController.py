@@ -3,6 +3,7 @@ from Auditor.authoritiesAuditor import AuthoritiesAuditor
 from appSettings import Resource, request, api
 from mapper.candidateMapper import CandidateMapper
 from services.candidateService import CandidateService
+from flask_restful import abort
 
 candidateMapper = CandidateMapper()
 candidateService = CandidateService()
@@ -16,7 +17,7 @@ class CandidateController(Resource):
             updated_candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.put(id, updated_candidate))
         else:
-            return {'warning': 'request must be json'}
+            return abort(400, erorr=' request must be json')
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='DELETE_ASSESSMENT')
@@ -45,7 +46,7 @@ class CandidatesController(Resource):
             candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.add(candidate))
         else:
-            return {'warning': 'request must be json'}
+            return abort(400, erorr=' request must be json')
 
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='VIEW_ASSESSMENT,view_approved_candidates')
@@ -54,7 +55,7 @@ class CandidatesController(Resource):
         candidate_key_set = set(candidateMapper.g_to_bo(request.args).__dict__.keys())
         input_key_sey = set(request.args.keys())
         if not input_key_sey.issubset(candidate_key_set):
-            return {'error', 'invalid search criteria'}
+            return abort(400, erorr=' invalid search criteria')
         return candidateService.search(request.args, user_type)
 
 

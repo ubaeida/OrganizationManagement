@@ -1,13 +1,6 @@
-from enum import Enum
-
 from appSettings import db
 from models.gender import Gender
-
-
-class CaseStatus(Enum):
-    active = "active"
-    closed = "closed"
-    waiting_to_approve = "waiting_to_approve"
+from models.followup import Followup
 
 
 class Case(db.Model):
@@ -15,7 +8,8 @@ class Case(db.Model):
     fullname = db.Column(db.String(50), nullable=False)
     gender: Gender = db.Column(db.String(50), nullable=False)
     case_worker_id = db.Column(db.Integer, nullable=True)
-    status: CaseStatus = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.String(20), nullable=False)
+    followups = db.relationship('Followup', backref='case')
 
     search = {
         'id': lambda value: Case.id == value,
@@ -34,21 +28,21 @@ class Case(db.Model):
     }
 
     case_transitions = {('CASE_MANAGEMENT_OFFICER', 'awaiting_assignment', 'assign'): 'awaiting_assessment',
-            ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'approve'): 'active',
-            ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'committee'): 'awaiting_committee',
-            ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'reject'): 'rejected',
-            ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'approve'): 'closed',
-            ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'committee'): 'awaiting_committee_closure',
-            ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'reject'): 'active',
-            ('HEAD_OFFICE', 'awaiting_committee', 'approve'): 'active',
-            ('HEAD_OFFICE', 'awaiting_committee', 'reject'): 'rejected',
-            ('HEAD_OFFICE', 'awaiting_committee_closure', 'reject'): 'active',
-            ('HEAD_OFFICE', 'awaiting_committee_closure', 'reject'): 'closed',
-            ('CASEWORKER', 'awaiting_assessment', 'assessed'): 'awaiting_approval',
-            ('CASEWORKER', 'active', 'close'): 'awaiting_closure',
-            }
+                        ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'approve'): 'active',
+                        ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'committee'): 'awaiting_committee',
+                        ('CASE_MANAGEMENT_OFFICER', 'awaiting_approval', 'reject'): 'rejected',
+                        ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'approve'): 'closed',
+                        ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'committee'): 'awaiting_committee_closure',
+                        ('CASE_MANAGEMENT_OFFICER', 'awaiting_closure', 'reject'): 'active',
+                        ('HEAD_OFFICE', 'awaiting_committee', 'approve'): 'active',
+                        ('HEAD_OFFICE', 'awaiting_committee', 'reject'): 'rejected',
+                        ('HEAD_OFFICE', 'awaiting_committee_closure', 'reject'): 'active',
+                        ('HEAD_OFFICE', 'awaiting_committee_closure', 'reject'): 'closed',
+                        ('CASEWORKER', 'awaiting_assessment', 'assessed'): 'awaiting_approval',
+                        ('CASEWORKER', 'active', 'close'): 'awaiting_closure',
+                        }
 
-    def __init__(self, fullname, gender: Gender, case_worker_id, status: CaseStatus = 'awaiting_assignment', id=None):
+    def __init__(self, fullname, gender: Gender, case_worker_id, status='awaiting_assignment', id=None):
         self.id = id
         self.fullname = fullname
         self.gender = gender
