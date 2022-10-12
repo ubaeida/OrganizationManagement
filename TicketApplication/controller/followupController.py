@@ -56,5 +56,5 @@ class FollowupsController(Resource):
         return followupService.search(request.args, user_type, user_id)
 
 
-api.add_resource(FollowupController, '/cases/<case_id>/followups/<id>')
-api.add_resource(FollowupsController, '/cases/<case_id>/followups')
+api.add_resource(FollowupController, '/tickets/cases/<case_id>/followups/<id>')
+api.add_resource(FollowupsController, '/tickets/cases/<case_id>/followups')

@@ -59,5 +59,5 @@ class CandidatesController(Resource):
         return candidateService.search(request.args, user_type)
 
 
-api.add_resource(CandidatesController, '/candidates')
-api.add_resource(CandidateController, '/candidates/<id>')
+api.add_resource(CandidatesController, '/tickets/candidates')
+api.add_resource(CandidateController, '/tickets/candidates/<id>')

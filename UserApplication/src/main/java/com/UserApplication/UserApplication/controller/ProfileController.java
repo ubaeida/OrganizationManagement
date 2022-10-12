@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/users/profile")
 public class ProfileController {
     final ProfileService profileService;
 

@@ -65,6 +65,6 @@ class CMOAssignCaseController(Resource):
             return caseService.update_case_status(case_id, cw_id, action, user_type)
 
 
-api.add_resource(CasesController, '/cases')
-api.add_resource(CaseController, '/cases/<id>')
-api.add_resource(CMOAssignCaseController, '/cases/<case_id>/status/<action>')
+api.add_resource(CasesController, '/tickets/cases')
+api.add_resource(CaseController, '/tickets/cases/<id>')
+api.add_resource(CMOAssignCaseController, '/tickets/cases/<case_id>/status/<action>')

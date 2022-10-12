@@ -50,5 +50,5 @@ class OutreachesController(Resource):
             return abort(400, erorr='Request must be jason')
 
 
-api.add_resource(OutreachesController, "/outreaches")
-api.add_resource(OutreachController, "/outreaches/<id>")
+api.add_resource(OutreachesController, "/tickets/outreaches")
+api.add_resource(OutreachController, "/tickets/outreaches/<id>")

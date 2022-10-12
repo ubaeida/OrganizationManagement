@@ -13,7 +13,7 @@ class AuthoritiesAuditor:
             def checker(*args, **kwargs):
                 user_type = kwargs['jwt_decoded']['type']
                 response = eureka_client.do_service('user-application-server',
-                                                    f'/auth/hasAuthority?receivedUserType={user_type}&questionedPermission={permissions}')
+                                                    f'users/auth/hasAuthority?receivedUserType={user_type}&questionedPermission={permissions}')
                 if response == 'true':
                     return f(*args, **kwargs)
                 else:

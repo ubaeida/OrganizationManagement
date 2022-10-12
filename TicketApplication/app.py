@@ -16,10 +16,13 @@ FollowupController()
 FollowupsController()
 
 rest_port = 8050
+localhost = 'localhost'
 eureka_client.init(eureka_server="http://localhost:8761",
                    app_name="ticket-application-server",
-                   instance_port=rest_port)
+                   instance_port=rest_port,
+                   instance_host=localhost
+                   )
 
 if __name__ == '__main__':
     db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, host='localhost', port=8050)
