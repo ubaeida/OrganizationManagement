@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+  eureka-server:
+    build:
+      context: .\EurekaServer
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - ms-network
+    environment:
+      eureka.instance.hostname: eureka-server
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/  
+  
+  gateway_service:
+    build:
+      context: .\gateway\gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9191:9191"
+    depends_on:
+      - eureka-server
+    networks:
+      - ms-network
+    environment:
+      server.port: 9191
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+  
+  db:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=organizationmanagement
+    networks:
+      - springmysql-net
+    ports:
+      - "3308:3306"
+    volumes:
+      - db:/var/lib/mysql
+
+  user-application-server:
+    build:
+      context: ./UserApplication
+      dockerfile: Dockerfile
+    ports:
+      - "8060:8060"
+    environment:
+      SPRING_DATASOURCE_driverClassName: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/organizationmanagement
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      server.port: 8060
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    networks:
+      - springmysql-net
+      - ms-network
+    depends_on:
+      - eureka-server
+      - gateway_service
+      - db
+
+networks:
+  springmysql-net:
+    driver: bridge
+  ms-network:
+    driver: bridge
+
+volumes:
+    db:
+      driver: local
