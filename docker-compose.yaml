@@ -60,6 +60,22 @@ services:
       - gateway_service
       - db
 
+  ticket-application-server:
+    build:
+      context: ./TicketApplication
+      dockerfile: Dockerfile
+    ports: 
+      - "8050:8050"
+    environment:
+      - db_url=mysql+pymysql://root:1234@db:3306/organizationmanagement
+      - eureka_server=http://eureka-server:8761/eureka/
+    networks:
+      - springmysql-net
+      - ms-network
+    links:
+      - db
+
+      
 networks:
   springmysql-net:
     driver: bridge

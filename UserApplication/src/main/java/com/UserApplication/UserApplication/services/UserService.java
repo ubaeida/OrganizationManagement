@@ -1,5 +1,6 @@
 package com.UserApplication.UserApplication.services;
 
+import com.UserApplication.UserApplication.exceptions.UserNotFoundException;
 import com.UserApplication.UserApplication.models.User;
 import com.UserApplication.UserApplication.persistance.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,7 +72,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var userDetails = userRepository.findByUsername(username).orElseThrow();
+        var userDetails = userRepository.findByUsername(username).orElseThrow(()-> new UserNotFoundException(username));
         userDetails.getAuthorities();
         return userDetails;
     }

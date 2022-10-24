@@ -27,6 +27,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(String username, String password) {
+        System.out.printf("%s", username);
+        System.out.printf("%s", password);
         var authentication = new UsernamePasswordAuthenticationToken(username, password);
         var user = authenticationManager.authenticate(authentication);
         return tokenUtil.generateToken((UserDetails) user.getPrincipal());
