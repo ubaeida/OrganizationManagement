@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   eureka-server:
+    container_name: eureka-server
     build:
       context: .\EurekaServer
       dockerfile: Dockerfile
@@ -12,7 +13,8 @@ services:
       eureka.instance.hostname: eureka-server
       eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/  
   
-  gateway_service:
+  gateway-service:
+    container_name: gateway-service
     build:
       context: .\gateway\gateway
       dockerfile: Dockerfile
@@ -28,6 +30,7 @@ services:
   
   db:
     image: mysql
+    container_name: db
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=1234
@@ -40,6 +43,7 @@ services:
       - db:/var/lib/mysql
 
   user-application-server:
+    container_name: user-application-server
     build:
       context: ./UserApplication
       dockerfile: Dockerfile
@@ -57,10 +61,11 @@ services:
       - ms-network
     depends_on:
       - eureka-server
-      - gateway_service
+      - gateway-service
       - db
 
   ticket-application-server:
+    container_name: ticket-application-server
     build:
       context: ./TicketApplication
       dockerfile: Dockerfile
@@ -69,12 +74,15 @@ services:
     environment:
       - db_url=mysql+pymysql://root:1234@db:3306/organizationmanagement
       - eureka_server=http://eureka-server:8761/eureka/
+      - app_name=ticket-application-server
     networks:
       - springmysql-net
       - ms-network
-    links:
+    depends_on:
+      - eureka-server
+      - gateway-service
       - db
-
+      - user-application-server
       
 networks:
   springmysql-net:
