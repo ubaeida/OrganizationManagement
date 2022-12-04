@@ -21,7 +21,7 @@ localhost = 'localhost'
 # eureka_client.init(eureka_server=os.environ.get('eureka_server'),
 #                    app_name= os.environ.get('app_name'),
 #                    instance_port=rest_port,
-#                    # instance_host=os.environ.get('instance_host')
+#                    instance_host=os.environ.get('instance_host')
 #                    )
 
 eureka_client.init(eureka_server="http://localhost:8761/eureka/",
