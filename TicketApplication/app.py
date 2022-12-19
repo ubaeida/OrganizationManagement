@@ -18,12 +18,12 @@ FollowupController()
 FollowupsController()
 rest_port = 8050
 localhost = 'localhost'
+#to run docker
 # eureka_client.init(eureka_server=os.environ.get('eureka_server'),
 #                    app_name= os.environ.get('app_name'),
 #                    instance_port=rest_port,
-#                    instance_host=os.environ.get('instance_host')
 #                    )
-
+# to run on my laptop
 eureka_client.init(eureka_server="http://localhost:8761/eureka/",
                    app_name="ticket-application-server",
                    instance_port=rest_port,

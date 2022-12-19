@@ -7,7 +7,7 @@ Library           RequestsLibrary
 *** Keywords ***
 LOGIN AND GET TOKEN
         [Arguments]    ${username}    ${password}
-        ${response}=        Post  http://localhost:9191/users/auth/login  params=username=${username}&password=${password}  expected_status=200
+        ${response}=        Post    http://localhost:9191/users/auth/login      params=username=${username}&password=${password}    expected_status=200
             [Return]            ${response.content}
 
 CREATE HEADERS

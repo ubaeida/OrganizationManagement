@@ -9,7 +9,9 @@ app = Flask(__name__)
 
 api = Api(app)
 app.config["JWT_SECRET_KEY"] = 'uTl1oNk7wk'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("db_url")
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost:3306/organizationmanagement'
+# to run docker
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("db_url")
+# to run on my laptop
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost:3306/organizationmanagement'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)

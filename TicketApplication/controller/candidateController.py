@@ -43,6 +43,8 @@ class CandidatesController(Resource):
     @AuthoritiesAuditor.secured(permissions='CREATE_ASSESSMENT')
     def post(self, **kwargs):
         if request.is_json:
+            request.json['nominator_id'] = kwargs['jwt_decoded']['id']
+            request.json['updater_id'] = kwargs['jwt_decoded']['id']
             candidate = candidateMapper.g_to_bo(request.json)
             return candidateMapper.to_request(candidateService.add(candidate))
         else:

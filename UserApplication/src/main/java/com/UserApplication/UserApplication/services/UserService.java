@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -25,7 +24,6 @@ public class UserService implements IUserService, UserDetailsService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     public User saveUser(User user) {
@@ -72,7 +70,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var userDetails = userRepository.findByUsername(username).orElseThrow(()-> new UserNotFoundException(username));
+        var userDetails = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
         userDetails.getAuthorities();
         return userDetails;
     }

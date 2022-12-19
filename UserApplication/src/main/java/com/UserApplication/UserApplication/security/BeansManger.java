@@ -14,9 +14,9 @@ public class BeansManger {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
+
 }
