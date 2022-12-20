@@ -33,9 +33,12 @@ class CandidateController(Resource):
     @JwtAspect.jwt_secured
     @AuthoritiesAuditor.secured(permissions='APPROVE_ASSESSMENT')
     def patch(self, id, **kwargs):
+        global status
+        if request.is_json:
+            status = request.json["status"]
         user_type = kwargs['jwt_decoded']['type']
         user_id = kwargs['jwt_decoded']['id']
-        return candidateService.update_status(id, user_type, user_id)
+        return candidateMapper.to_request_with_id(candidateService.update_status(id, user_type, user_id, status))
 
 
 class CandidatesController(Resource):
@@ -46,7 +49,7 @@ class CandidatesController(Resource):
             request.json['nominator_id'] = kwargs['jwt_decoded']['id']
             request.json['updater_id'] = kwargs['jwt_decoded']['id']
             candidate = candidateMapper.g_to_bo(request.json)
-            return candidateMapper.to_request(candidateService.add(candidate))
+            return candidateMapper.to_request_with_id(candidateService.add(candidate))
         else:
             return abort(400, erorr=' request must be json')
 

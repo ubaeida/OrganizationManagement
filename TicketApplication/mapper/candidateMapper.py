@@ -11,3 +11,8 @@ class CandidateMapper:
         out = {"fullname": bo.fullname, "gender": bo.gender, "nominator_id": bo.nominator_id,
                "status": bo.status, "updater_id": bo.updater_id}
         return out
+
+    def to_request_with_id(self, bo):
+        out = {"id": bo.id, "fullname": bo.fullname, "gender": bo.gender, "nominator_id": bo.nominator_id,
+               "status": bo.status, "updater_id": bo.updater_id}
+        return out

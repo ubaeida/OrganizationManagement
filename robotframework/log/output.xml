@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.0.1 (Python 3.10.4 on win32)" generated="20221219 21:52:48.672" rpa="false" schemaversion="3">
+<robot generator="Robot 6.0.1 (Python 3.10.4 on win32)" generated="20221221 00:36:08.821" rpa="false" schemaversion="3">
 <suite id="s1" name="Test" source="D:\OrganizationManagement\robotframework\test.robot">
-<test id="s1-t1" name="Add new user" line="10">
+<test id="s1-t1" name="Add outreach_assistant" line="12">
 <kw name="CREATE HEADERS" library="keywords">
 <var>${headers}</var>
 <arg>admin</arg>
@@ -16,44 +16,44 @@
 <arg>params=username=${username}&amp;password=${password}</arg>
 <arg>expected_status=200</arg>
 <doc>Sends a POST request.</doc>
-<msg timestamp="20221219 21:52:49.506" level="INFO">POST Request : url=http://localhost:9191/users/auth/login?username=admin&amp;password=test 
+<msg timestamp="20221221 00:36:08.989" level="INFO">POST Request : url=http://localhost:9191/users/auth/login?username=admin&amp;password=test 
  path_url=/users/auth/login?username=admin&amp;password=test 
  headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
  body=None 
  </msg>
-<msg timestamp="20221219 21:52:49.508" level="INFO">POST Response : url=http://localhost:9191/users/auth/login?username=admin&amp;password=test 
+<msg timestamp="20221221 00:36:08.991" level="INFO">POST Response : url=http://localhost:9191/users/auth/login?username=admin&amp;password=test 
  status=200, reason=OK 
- headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Date': 'Mon, 19 Dec 2022 18:52:49 GMT', 'content-length': '157'} 
- body=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidHlwZSI6IkFETUlOSVNUUkFUT1IiLCJjcmVhdGVkIjoxNjcxNDc1OTY5MzU4LCJzdWIiOiJhZG1pbiJ9.DRRbW3sfUu7gZdSo4nF7FTqRCcx7dJlZMcqL52-FQ-w 
+ headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Date': 'Tue, 20 Dec 2022 21:36:08 GMT', 'content-length': '157'} 
+ body=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjg5ODcsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.NbS_Top6kPk_Rgau79N_W69o_pCbrxx127j72Ef2WPs 
  </msg>
-<msg timestamp="20221219 21:52:49.509" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221219 21:52:48.796" endtime="20221219 21:52:49.509"/>
+<msg timestamp="20221221 00:36:08.991" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:08.912" endtime="20221221 00:36:08.991"/>
 </kw>
-<msg timestamp="20221219 21:52:49.509" level="INFO">${getToken} = eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidHlwZSI6IkFETUlOSVNUUkFUT1IiLCJjcmVhdGVkIjoxNjcxNDc1OTY5MzU4LCJzdWIiOiJhZG1pbiJ9.DRRbW3sfUu7gZdSo4nF7FTqRCcx7dJlZMcqL52-FQ-w</msg>
-<status status="PASS" starttime="20221219 21:52:48.795" endtime="20221219 21:52:49.509"/>
+<msg timestamp="20221221 00:36:08.991" level="INFO">${getToken} = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjg5ODcsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.NbS_Top6kPk_Rgau79N_W69o_pCbrxx127j72Ef2WPs</msg>
+<status status="PASS" starttime="20221221 00:36:08.912" endtime="20221221 00:36:08.991"/>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
 <var>&amp;{headrs}</var>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20221219 21:52:49.510" level="INFO">&amp;{headrs} = { }</msg>
-<status status="PASS" starttime="20221219 21:52:49.509" endtime="20221219 21:52:49.510"/>
+<msg timestamp="20221221 00:36:08.992" level="INFO">&amp;{headrs} = { }</msg>
+<status status="PASS" starttime="20221221 00:36:08.992" endtime="20221221 00:36:08.992"/>
 </kw>
 <kw name="Set To Dictionary" library="Collections">
 <arg>${headrs}</arg>
 <arg>Authorization</arg>
 <arg>Bearer ${getToken}</arg>
 <doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
-<status status="PASS" starttime="20221219 21:52:49.510" endtime="20221219 21:52:49.510"/>
+<status status="PASS" starttime="20221221 00:36:08.992" endtime="20221221 00:36:08.992"/>
 </kw>
 <kw name="Set To Dictionary" library="Collections">
 <arg>${headrs}</arg>
 <arg>Content-type</arg>
 <arg>Application/JSON</arg>
 <doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
-<status status="PASS" starttime="20221219 21:52:49.510" endtime="20221219 21:52:49.511"/>
+<status status="PASS" starttime="20221221 00:36:08.992" endtime="20221221 00:36:08.992"/>
 </kw>
-<msg timestamp="20221219 21:52:49.511" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidHlwZSI6IkFETUlOSVNUUkFUT1IiLCJjcmVhdGVkIjoxNjcxNDc1OTY5MzU4LCJzdWIiOiJhZG1pbiJ9.DRRbW3sfUu7gZdSo4nF7FTqRCcx7dJlZMcqL52-FQ-w', 'Content-type'...</msg>
-<status status="PASS" starttime="20221219 21:52:48.795" endtime="20221219 21:52:49.511"/>
+<msg timestamp="20221221 00:36:08.992" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjg5ODcsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.NbS_Top6kPk_Rgau79N_W69o_pCbrxx127j72Ef2WPs', 'Content-type'...</msg>
+<status status="PASS" starttime="20221221 00:36:08.911" endtime="20221221 00:36:08.992"/>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
 <var>&amp;{body}</var>
@@ -64,8 +64,8 @@
 <arg>type=OUTREACH_ASSISTANT</arg>
 <arg>password=test</arg>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20221219 21:52:49.511" level="INFO">&amp;{body} = { username=outreach_assistant | name=outreach_assistant | email=test@test.com | gender=MALE | type=OUTREACH_ASSISTANT | password=test }</msg>
-<status status="PASS" starttime="20221219 21:52:49.511" endtime="20221219 21:52:49.511"/>
+<msg timestamp="20221221 00:36:08.993" level="INFO">&amp;{body} = { username=outreach_assistant | name=outreach_assistant | email=test@test.com | gender=MALE | type=OUTREACH_ASSISTANT | password=test }</msg>
+<status status="PASS" starttime="20221221 00:36:08.993" endtime="20221221 00:36:08.993"/>
 </kw>
 <kw name="POST" library="RequestsLibrary">
 <var>${resp}</var>
@@ -74,28 +74,22 @@
 <arg>json=${body}</arg>
 <arg>expected_status=200</arg>
 <doc>Sends a POST request.</doc>
-<msg timestamp="20221219 21:52:49.732" level="INFO">POST Request : url=http://localhost:9191/users 
+<msg timestamp="20221221 00:36:09.090" level="INFO">POST Request : url=http://localhost:9191/users 
  path_url=/users 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidHlwZSI6IkFETUlOSVNUUkFUT1IiLCJjcmVhdGVkIjoxNjcxNDc1OTY5MzU4LCJzdWIiOiJhZG1pbiJ9.DRRbW3sfUu7gZdSo4nF7FTqRCcx7dJlZMcqL52-FQ-w', 'Content-type': 'Application/JSON', 'Content-Length': '158'} 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjg5ODcsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.NbS_Top6kPk_Rgau79N_W69o_pCbrxx127j72Ef2WPs', 'Content-type': 'Application/JSON', 'Content-Length': '158'} 
  body=b'{"username": "outreach_assistant", "name": "outreach_assistant", "email": "test@test.com", "gender": "MALE", "type": "OUTREACH_ASSISTANT", "password": "test"}' 
  </msg>
-<msg timestamp="20221219 21:52:49.732" level="INFO">POST Response : url=http://localhost:9191/users 
+<msg timestamp="20221221 00:36:09.090" level="INFO">POST Response : url=http://localhost:9191/users 
  status=200, reason=OK 
- headers={'transfer-encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Date': 'Mon, 19 Dec 2022 18:52:49 GMT'} 
- body={"id":31,"username":"outreach_assistant","name":"outreach_assistant","email":"test@test.com","gender":"MALE","type":"OUTREACH_ASSISTANT","password":"$2a$10$JILRDlZLdjtL/ZEDS5N...iATmVJB.IBagEDxytZkW/aFam/Xs.r6","enabled":true,"accountNonExpired":true,"accountNonLocked":true,"authorities":null,"credentialsNonExpired":true} 
+ headers={'transfer-encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Date': 'Tue, 20 Dec 2022 21:36:08 GMT'} 
+ body={"id":26,"username":"outreach_assistant","name":"outreach_assistant","email":"test@test.com","gender":"MALE","type":"OUTREACH_ASSISTANT","password":"$2a$10$.5byKviPRFnCnvsdL7OY4ep2wb31j4yVzugdxUXfh6azJk5BaxXT6","enabled":true,"authorities":null,"credentialsNonExpired":true,"accountNonExpired":true,"accountNonLocked":true} 
  </msg>
-<msg timestamp="20221219 21:52:49.732" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221219 21:52:49.511" endtime="20221219 21:52:49.732"/>
+<msg timestamp="20221221 00:36:09.090" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:08.993" endtime="20221221 00:36:09.090"/>
 </kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>'this response'</arg>
-<arg>${resp.content}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20221219 21:52:49.732" endtime="20221219 21:52:49.733"/>
-</kw>
-<status status="PASS" starttime="20221219 21:52:48.794" endtime="20221219 21:52:49.733"/>
+<status status="PASS" starttime="20221221 00:36:08.911" endtime="20221221 00:36:09.090"/>
 </test>
-<test id="s1-t2" name="Add new candidate" line="17">
+<test id="s1-t2" name="Add new candidate" line="18">
 <kw name="CREATE HEADERS" library="keywords">
 <var>${headers}</var>
 <arg>outreach_assistant</arg>
@@ -110,90 +104,296 @@
 <arg>params=username=${username}&amp;password=${password}</arg>
 <arg>expected_status=200</arg>
 <doc>Sends a POST request.</doc>
-<msg timestamp="20221219 21:52:49.814" level="INFO">POST Request : url=http://localhost:9191/users/auth/login?username=outreach_assistant&amp;password=test 
+<msg timestamp="20221221 00:36:09.164" level="INFO">POST Request : url=http://localhost:9191/users/auth/login?username=outreach_assistant&amp;password=test 
  path_url=/users/auth/login?username=outreach_assistant&amp;password=test 
  headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
  body=None 
  </msg>
-<msg timestamp="20221219 21:52:49.814" level="INFO">POST Response : url=http://localhost:9191/users/auth/login?username=outreach_assistant&amp;password=test 
+<msg timestamp="20221221 00:36:09.164" level="INFO">POST Response : url=http://localhost:9191/users/auth/login?username=outreach_assistant&amp;password=test 
  status=200, reason=OK 
- headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Date': 'Mon, 19 Dec 2022 18:52:49 GMT', 'content-length': '183'} 
- body=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MzEsInR5cGUiOiJPVVRSRUFDSF9BU1NJU1RBTlQiLCJjcmVhdGVkIjoxNjcxNDc1OTY5ODA3LCJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQifQ.m7y5FCj0XtF4_Z8MWrZ7O5wdR1QBmKc5-hfA0XiKPbg 
+ headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Date': 'Tue, 20 Dec 2022 21:36:08 GMT', 'content-length': '183'} 
+ body=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQiLCJjcmVhdGVkIjoxNjcxNTcyMTY5MTYwLCJ0eXBlIjoiT1VUUkVBQ0hfQVNTSVNUQU5UIiwiaWQiOjI2fQ.sM8riqf4b0q3MhLWi2WRNrWlFwFSRZ0q0NPARAvYDhM 
  </msg>
-<msg timestamp="20221219 21:52:49.815" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20221219 21:52:49.734" endtime="20221219 21:52:49.815"/>
+<msg timestamp="20221221 00:36:09.164" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:09.091" endtime="20221221 00:36:09.164"/>
 </kw>
-<msg timestamp="20221219 21:52:49.815" level="INFO">${getToken} = eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MzEsInR5cGUiOiJPVVRSRUFDSF9BU1NJU1RBTlQiLCJjcmVhdGVkIjoxNjcxNDc1OTY5ODA3LCJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQifQ.m7y5FCj0XtF4_Z8MWrZ7O5wdR1QBmKc5-hfA0XiKPbg</msg>
-<status status="PASS" starttime="20221219 21:52:49.734" endtime="20221219 21:52:49.815"/>
+<msg timestamp="20221221 00:36:09.164" level="INFO">${getToken} = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQiLCJjcmVhdGVkIjoxNjcxNTcyMTY5MTYwLCJ0eXBlIjoiT1VUUkVBQ0hfQVNTSVNUQU5UIiwiaWQiOjI2fQ.sM8riqf4b0q3MhLWi2WRNrWlFwFSRZ0q0NPARAvYDhM</msg>
+<status status="PASS" starttime="20221221 00:36:09.091" endtime="20221221 00:36:09.164"/>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
 <var>&amp;{headrs}</var>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20221219 21:52:49.816" level="INFO">&amp;{headrs} = { }</msg>
-<status status="PASS" starttime="20221219 21:52:49.815" endtime="20221219 21:52:49.816"/>
+<msg timestamp="20221221 00:36:09.165" level="INFO">&amp;{headrs} = { }</msg>
+<status status="PASS" starttime="20221221 00:36:09.165" endtime="20221221 00:36:09.165"/>
 </kw>
 <kw name="Set To Dictionary" library="Collections">
 <arg>${headrs}</arg>
 <arg>Authorization</arg>
 <arg>Bearer ${getToken}</arg>
 <doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
-<status status="PASS" starttime="20221219 21:52:49.816" endtime="20221219 21:52:49.816"/>
+<status status="PASS" starttime="20221221 00:36:09.165" endtime="20221221 00:36:09.165"/>
 </kw>
 <kw name="Set To Dictionary" library="Collections">
 <arg>${headrs}</arg>
 <arg>Content-type</arg>
 <arg>Application/JSON</arg>
 <doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
-<status status="PASS" starttime="20221219 21:52:49.816" endtime="20221219 21:52:49.817"/>
+<status status="PASS" starttime="20221221 00:36:09.165" endtime="20221221 00:36:09.165"/>
 </kw>
-<msg timestamp="20221219 21:52:49.817" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MzEsInR5cGUiOiJPVVRSRUFDSF9BU1NJU1RBTlQiLCJjcmVhdGVkIjoxNjcxNDc1OTY5ODA3LCJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQifQ.m7y5FCj0XtF4_Z8MWrZ7O5wdR1QBmKc5-h...</msg>
-<status status="PASS" starttime="20221219 21:52:49.733" endtime="20221219 21:52:49.817"/>
+<msg timestamp="20221221 00:36:09.165" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQiLCJjcmVhdGVkIjoxNjcxNTcyMTY5MTYwLCJ0eXBlIjoiT1VUUkVBQ0hfQVNTSVNUQU5UIiwiaWQiOjI2fQ.sM8riqf4b0q3MhLWi2WRNrWlFwFSRZ0q0N...</msg>
+<status status="PASS" starttime="20221221 00:36:09.091" endtime="20221221 00:36:09.166"/>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
 <var>&amp;{body}</var>
 <arg>fullname=First_candidate</arg>
 <arg>gender=FEMALE</arg>
-<arg>nominator_id=22</arg>
-<arg>status=test status</arg>
-<arg>updater_id=22</arg>
+<arg>status=nominated</arg>
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20221219 21:52:49.817" level="INFO">&amp;{body} = { fullname=First_candidate | gender=FEMALE | nominator_id=22 | status=test status | updater_id=22 }</msg>
-<status status="PASS" starttime="20221219 21:52:49.817" endtime="20221219 21:52:49.817"/>
+<msg timestamp="20221221 00:36:09.166" level="INFO">&amp;{body} = { fullname=First_candidate | gender=FEMALE | status=nominated }</msg>
+<status status="PASS" starttime="20221221 00:36:09.166" endtime="20221221 00:36:09.166"/>
 </kw>
 <kw name="POST" library="RequestsLibrary">
-<var>@{response}</var>
+<var>${response}</var>
 <arg>http://localhost:9191/tickets/candidates</arg>
 <arg>headers=${headers}</arg>
 <arg>json=${body}</arg>
 <arg>expected_status=200</arg>
 <doc>Sends a POST request.</doc>
-<msg timestamp="20221219 21:52:49.891" level="INFO">POST Request : url=http://localhost:9191/tickets/candidates 
+<msg timestamp="20221221 00:36:09.200" level="INFO">POST Request : url=http://localhost:9191/tickets/candidates 
  path_url=/tickets/candidates 
- headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MzEsInR5cGUiOiJPVVRSRUFDSF9BU1NJU1RBTlQiLCJjcmVhdGVkIjoxNjcxNDc1OTY5ODA3LCJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQifQ.m7y5FCj0XtF4_Z8MWrZ7O5wdR1QBmKc5-hfA0XiKPbg', 'Content-type': 'Application/JSON', 'Content-Length': '118'} 
- body=b'{"fullname": "First_candidate", "gender": "FEMALE", "nominator_id": "22", "status": "test status", "updater_id": "22"}' 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9hc3Npc3RhbnQiLCJjcmVhdGVkIjoxNjcxNTcyMTY5MTYwLCJ0eXBlIjoiT1VUUkVBQ0hfQVNTSVNUQU5UIiwiaWQiOjI2fQ.sM8riqf4b0q3MhLWi2WRNrWlFwFSRZ0q0NPARAvYDhM', 'Content-type': 'Application/JSON', 'Content-Length': '74'} 
+ body=b'{"fullname": "First_candidate", "gender": "FEMALE", "status": "nominated"}' 
  </msg>
-<msg timestamp="20221219 21:52:49.891" level="INFO">POST Response : url=http://localhost:9191/tickets/candidates 
+<msg timestamp="20221221 00:36:09.200" level="INFO">POST Response : url=http://localhost:9191/tickets/candidates 
  status=200, reason=OK 
- headers={'Server': 'Werkzeug/2.2.2 Python/3.8.16', 'Date': 'Mon, 19 Dec 2022 18:52:49 GMT', 'Content-Type': 'application/json', 'content-length': '115'} 
- body={"fullname": "First_candidate", "gender": "FEMALE", "nominator_id": 22, "status": "test status", "updater_id": 22}
+ headers={'Server': 'Werkzeug/2.2.2 Python/3.10.4', 'Date': 'Tue, 20 Dec 2022 21:36:09 GMT', 'Content-Type': 'application/json', 'content-length': '150'} 
+ body={
+    "id": 155,
+    "fullname": "First_candidate",
+    "gender": "FEMALE",
+    "nominator_id": 26,
+    "status": "nominated",
+    "updater_id": 26
+}
  
  </msg>
-<msg timestamp="20221219 21:52:49.892" level="INFO">@{response} = [ {"fullname": "First_candidate", "gender": "FEMALE", "nominator_id": 22, "status": "test status", "updater_id": 22}
- ]</msg>
-<status status="PASS" starttime="20221219 21:52:49.817" endtime="20221219 21:52:49.892"/>
+<msg timestamp="20221221 00:36:09.200" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:09.166" endtime="20221221 00:36:09.200"/>
 </kw>
-<status status="PASS" starttime="20221219 21:52:49.733" endtime="20221219 21:52:49.892"/>
+<kw name="Set Variable" library="BuiltIn">
+<var>${candidate_id}</var>
+<arg>${response.json()}[id]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221221 00:36:09.201" level="INFO">${candidate_id} = 155</msg>
+<status status="PASS" starttime="20221221 00:36:09.200" endtime="20221221 00:36:09.201"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${candidate_id}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221221 00:36:09.201" level="INFO">${candidate_id} = 155</msg>
+<status status="PASS" starttime="20221221 00:36:09.201" endtime="20221221 00:36:09.201"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${candidate_id}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221221 00:36:09.201" endtime="20221221 00:36:09.201"/>
+</kw>
+<status status="PASS" starttime="20221221 00:36:09.090" endtime="20221221 00:36:09.201"/>
 </test>
-<status status="PASS" starttime="20221219 21:52:48.674" endtime="20221219 21:52:49.893"/>
+<test id="s1-t3" name="Add outreach_officer" line="26">
+<kw name="CREATE HEADERS" library="keywords">
+<var>${headers}</var>
+<arg>admin</arg>
+<arg>test</arg>
+<kw name="LOGIN AND GET TOKEN" library="keywords">
+<var>${getToken}</var>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>http://localhost:9191/users/auth/login</arg>
+<arg>params=username=${username}&amp;password=${password}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20221221 00:36:09.274" level="INFO">POST Request : url=http://localhost:9191/users/auth/login?username=admin&amp;password=test 
+ path_url=/users/auth/login?username=admin&amp;password=test 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20221221 00:36:09.275" level="INFO">POST Response : url=http://localhost:9191/users/auth/login?username=admin&amp;password=test 
+ status=200, reason=OK 
+ headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Date': 'Tue, 20 Dec 2022 21:36:08 GMT', 'content-length': '157'} 
+ body=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjkyNzMsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.g15Bq2zDgKIdcUzQeLUGMa_fnlSyvcweqSyzAnASj10 
+ </msg>
+<msg timestamp="20221221 00:36:09.275" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:09.203" endtime="20221221 00:36:09.275"/>
+</kw>
+<msg timestamp="20221221 00:36:09.275" level="INFO">${getToken} = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjkyNzMsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.g15Bq2zDgKIdcUzQeLUGMa_fnlSyvcweqSyzAnASj10</msg>
+<status status="PASS" starttime="20221221 00:36:09.202" endtime="20221221 00:36:09.275"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headrs}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221221 00:36:09.276" level="INFO">&amp;{headrs} = { }</msg>
+<status status="PASS" starttime="20221221 00:36:09.275" endtime="20221221 00:36:09.276"/>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<arg>${headrs}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${getToken}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221221 00:36:09.276" endtime="20221221 00:36:09.276"/>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<arg>${headrs}</arg>
+<arg>Content-type</arg>
+<arg>Application/JSON</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221221 00:36:09.276" endtime="20221221 00:36:09.276"/>
+</kw>
+<msg timestamp="20221221 00:36:09.277" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjkyNzMsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.g15Bq2zDgKIdcUzQeLUGMa_fnlSyvcweqSyzAnASj10', 'Content-type'...</msg>
+<status status="PASS" starttime="20221221 00:36:09.202" endtime="20221221 00:36:09.277"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{body}</var>
+<arg>username=outreach_officer</arg>
+<arg>name=outreach_officer</arg>
+<arg>email=test@test.com</arg>
+<arg>gender=FEMALE</arg>
+<arg>type=OUTREACH_OFFICER</arg>
+<arg>password=test</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221221 00:36:09.277" level="INFO">&amp;{body} = { username=outreach_officer | name=outreach_officer | email=test@test.com | gender=FEMALE | type=OUTREACH_OFFICER | password=test }</msg>
+<status status="PASS" starttime="20221221 00:36:09.277" endtime="20221221 00:36:09.277"/>
+</kw>
+<kw name="POST" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>http://localhost:9191/users</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20221221 00:36:09.360" level="INFO">POST Request : url=http://localhost:9191/users 
+ path_url=/users 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImNyZWF0ZWQiOjE2NzE1NzIxNjkyNzMsInR5cGUiOiJBRE1JTklTVFJBVE9SIiwiaWQiOjF9.g15Bq2zDgKIdcUzQeLUGMa_fnlSyvcweqSyzAnASj10', 'Content-type': 'Application/JSON', 'Content-Length': '154'} 
+ body=b'{"username": "outreach_officer", "name": "outreach_officer", "email": "test@test.com", "gender": "FEMALE", "type": "OUTREACH_OFFICER", "password": "test"}' 
+ </msg>
+<msg timestamp="20221221 00:36:09.360" level="INFO">POST Response : url=http://localhost:9191/users 
+ status=200, reason=OK 
+ headers={'transfer-encoding': 'chunked', 'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Date': 'Tue, 20 Dec 2022 21:36:08 GMT'} 
+ body={"id":27,"username":"outreach_officer","name":"outreach_officer","email":"test@test.com","gender":"FEMALE","type":"OUTREACH_OFFICER","password":"$2a$10$zdZEPXNHWrNvVvl/k67mbum98ETlChtoAFegCyqXue.cNeoFi9aXC","enabled":true,"authorities":null,"credentialsNonExpired":true,"accountNonExpired":true,"accountNonLocked":true} 
+ </msg>
+<msg timestamp="20221221 00:36:09.361" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:09.277" endtime="20221221 00:36:09.361"/>
+</kw>
+<status status="PASS" starttime="20221221 00:36:09.202" endtime="20221221 00:36:09.361"/>
+</test>
+<test id="s1-t4" name="Approve candidate_by_outreach_officer" line="31">
+<kw name="CREATE HEADERS" library="keywords">
+<var>${headers}</var>
+<arg>outreach_officer</arg>
+<arg>test</arg>
+<kw name="LOGIN AND GET TOKEN" library="keywords">
+<var>${getToken}</var>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>http://localhost:9191/users/auth/login</arg>
+<arg>params=username=${username}&amp;password=${password}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20221221 00:36:09.436" level="INFO">POST Request : url=http://localhost:9191/users/auth/login?username=outreach_officer&amp;password=test 
+ path_url=/users/auth/login?username=outreach_officer&amp;password=test 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20221221 00:36:09.436" level="INFO">POST Response : url=http://localhost:9191/users/auth/login?username=outreach_officer&amp;password=test 
+ status=200, reason=OK 
+ headers={'Vary': 'Origin, Access-Control-Request-Method, Access-Control-Request-Headers', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Date': 'Tue, 20 Dec 2022 21:36:08 GMT', 'content-length': '177'} 
+ body=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9vZmZpY2VyIiwiY3JlYXRlZCI6MTY3MTU3MjE2OTQzNCwidHlwZSI6Ik9VVFJFQUNIX09GRklDRVIiLCJpZCI6Mjd9.TitoGNAdcnMhFrRzysMCdetO_mg9b30dA7xHdhqgvV0 
+ </msg>
+<msg timestamp="20221221 00:36:09.437" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:09.362" endtime="20221221 00:36:09.437"/>
+</kw>
+<msg timestamp="20221221 00:36:09.437" level="INFO">${getToken} = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9vZmZpY2VyIiwiY3JlYXRlZCI6MTY3MTU3MjE2OTQzNCwidHlwZSI6Ik9VVFJFQUNIX09GRklDRVIiLCJpZCI6Mjd9.TitoGNAdcnMhFrRzysMCdetO_mg9b30dA7xHdhqgvV0</msg>
+<status status="PASS" starttime="20221221 00:36:09.362" endtime="20221221 00:36:09.437"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headrs}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221221 00:36:09.437" level="INFO">&amp;{headrs} = { }</msg>
+<status status="PASS" starttime="20221221 00:36:09.437" endtime="20221221 00:36:09.437"/>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<arg>${headrs}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${getToken}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221221 00:36:09.438" endtime="20221221 00:36:09.438"/>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<arg>${headrs}</arg>
+<arg>Content-type</arg>
+<arg>Application/JSON</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221221 00:36:09.438" endtime="20221221 00:36:09.438"/>
+</kw>
+<msg timestamp="20221221 00:36:09.438" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9vZmZpY2VyIiwiY3JlYXRlZCI6MTY3MTU3MjE2OTQzNCwidHlwZSI6Ik9VVFJFQUNIX09GRklDRVIiLCJpZCI6Mjd9.TitoGNAdcnMhFrRzysMCdetO_mg9b30dA7xHdhqg...</msg>
+<status status="PASS" starttime="20221221 00:36:09.362" endtime="20221221 00:36:09.438"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${body}</var>
+<arg>status=approved</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221221 00:36:09.438" level="INFO">${body} = {'status': 'approved'}</msg>
+<status status="PASS" starttime="20221221 00:36:09.438" endtime="20221221 00:36:09.438"/>
+</kw>
+<kw name="PATCH" library="RequestsLibrary">
+<var>${response}</var>
+<arg>http://localhost:9191/tickets/candidates/${candidate_id}</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=200</arg>
+<doc>Sends a PUT request.</doc>
+<msg timestamp="20221221 00:36:09.467" level="INFO">PATCH Request : url=http://localhost:9191/tickets/candidates/155 
+ path_url=/tickets/candidates/155 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdXRyZWFjaF9vZmZpY2VyIiwiY3JlYXRlZCI6MTY3MTU3MjE2OTQzNCwidHlwZSI6Ik9VVFJFQUNIX09GRklDRVIiLCJpZCI6Mjd9.TitoGNAdcnMhFrRzysMCdetO_mg9b30dA7xHdhqgvV0', 'Content-type': 'Application/JSON', 'Content-Length': '22'} 
+ body=b'{"status": "approved"}' 
+ </msg>
+<msg timestamp="20221221 00:36:09.467" level="INFO">PATCH Response : url=http://localhost:9191/tickets/candidates/155 
+ status=200, reason=OK 
+ headers={'Server': 'Werkzeug/2.2.2 Python/3.10.4', 'Date': 'Tue, 20 Dec 2022 21:36:09 GMT', 'Content-Type': 'application/json', 'content-length': '149'} 
+ body={
+    "id": 155,
+    "fullname": "First_candidate",
+    "gender": "FEMALE",
+    "nominator_id": 26,
+    "status": "approved",
+    "updater_id": 27
+}
+ 
+ </msg>
+<msg timestamp="20221221 00:36:09.467" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221221 00:36:09.439" endtime="20221221 00:36:09.467"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221221 00:36:09.467" endtime="20221221 00:36:09.468"/>
+</kw>
+<status status="PASS" starttime="20221221 00:36:09.361" endtime="20221221 00:36:09.468"/>
+</test>
+<status status="PASS" starttime="20221221 00:36:08.823" endtime="20221221 00:36:09.468"/>
 </suite>
 <statistics>
 <total>
-<stat pass="2" fail="0" skip="0">All Tests</stat>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="2" fail="0" skip="0" id="s1" name="Test">Test</stat>
+<stat pass="4" fail="0" skip="0" id="s1" name="Test">Test</stat>
 </suite>
 </statistics>
 <errors>

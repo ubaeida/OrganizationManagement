@@ -56,17 +56,15 @@ class CandidateService:
             )
         return {"Candidate": candidate_list}
 
-    def update_status(self, id, user_type, user_id):
+    def update_status(self, id, user_type, user_id, new_status):
         current_candidate = Candidate.query.get(id)
         if current_candidate.status == 'nominated' or current_candidate.status == 'approved':
             if user_type == 'OUTREACH_OFFICER':
-                status = 'approved'
-                current_candidate.status = status
+                current_candidate.status = new_status
                 current_candidate.updater_id = user_id
                 db.session.commit()
             elif user_type == 'CASE_MANAGEMENT_OFFICER':
-                status = 'accepted'
-                current_candidate.status = status
+                current_candidate.status = new_status
                 current_candidate.updater_id = user_id
                 new_case = Case(fullname=current_candidate.fullname, gender=current_candidate.gender,
                                 case_worker_id=None)
@@ -76,4 +74,4 @@ class CandidateService:
                 return abort(400, erorr='Not allowed to do this operation')
         else:
             return abort(400, erorr='The candidate might approved or accepted already')
-        return abort(400, erorr='The candidate status has been updated')
+        return current_candidate
