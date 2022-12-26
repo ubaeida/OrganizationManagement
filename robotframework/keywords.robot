@@ -18,3 +18,11 @@ CREATE HEADERS
         Set To Dictionary   ${headrs}    Content-type     Application/JSON
 
             [Return]            ${headrs}
+
+CREATE USER
+    [Arguments]         ${username}     ${name}     ${email}     ${gender}      ${type}     ${password}
+    ${headers}=         CREATE HEADERS          admin       test
+    &{body}=            Create Dictionary              username=${username}     name=${name}     email=${email}     gender=${gender}     type=${type}     password=${password}
+    ${resp}=            POST    http://localhost:9191/users      headers=${headers}       json=${body}      expected_status=200
+
+                        [Return]            ${resp}

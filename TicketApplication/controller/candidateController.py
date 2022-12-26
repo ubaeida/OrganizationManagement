@@ -15,7 +15,8 @@ class CandidateController(Resource):
     def put(self, id, **kwargs):
         if request.is_json:
             updated_candidate = candidateMapper.g_to_bo(request.json)
-            return candidateMapper.to_request(candidateService.put(id, updated_candidate))
+            user_id = kwargs['jwt_decoded']['id']
+            return candidateMapper.to_request(candidateService.put(id, user_id,updated_candidate))
         else:
             return abort(400, erorr=' request must be json')
 

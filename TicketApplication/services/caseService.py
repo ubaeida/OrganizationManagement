@@ -83,4 +83,4 @@ class CaseService:
             case.case_worker_id = cw_id
         case.status = case_status
         db.session.commit()
-        return abort(200, message=f'the case status has been updated to {case_status}')
+        return f'the case status has been updated to {case_status}'

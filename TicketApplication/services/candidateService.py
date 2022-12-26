@@ -14,12 +14,14 @@ class CandidateService:
         db.session.commit()
         return new_candidate
 
-    def put(self, id, updated_candidate):
+    def put(self, id,updater_id ,updated_candidate):
         raw_to_update = Candidate.query.get(id)
         if raw_to_update is None:
             return abort(400, erorr='Candidate not found')
         else:
             updated_candidate.id = id
+            updated_candidate.nominator_id = raw_to_update.nominator_id
+            updated_candidate.updater_id = updater_id
             db.session.merge(updated_candidate)
             db.session.commit()
             return raw_to_update
