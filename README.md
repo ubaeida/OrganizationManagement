@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 # OrganizationManagement
 
-An HTTP based microservices system aims to automate the NGOs' work.
+An HTTP based microservices API aims to automate the NGOs' work.
 
 For learning purposes, I used microservice architecture and divided this project into services written in Java and Python.
 
