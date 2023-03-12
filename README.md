@@ -1,11 +1,11 @@
 <a name="readme-top"></a>
 # OrganizationManagement
 
-A microservices system aims to automate the NGOs' work.
+An HTTP based microservices system aims to automate the NGOs' work.
 
 For learning purposes, I used microservice architecture and divided this project into services written in Java and Python.
 
-Also, the project used Spring Boot framework from Java and Falsk framework from Python
+Also, the project used Spring Boot framework from Java and Falsk framework from Python.
 
 ## How it works
 <br />
